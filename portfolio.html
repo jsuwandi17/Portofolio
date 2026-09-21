@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Portfolio and Case Studies by Jaenudin Suwandi — Custom Web Applications, Filament Admin Dashboards, and Supply Chain Inventory Tracking Systems.">
+  <title>Portfolio and Case Studies — Jaenudin Suwandi</title>
+
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+</head>
+
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="site-logo"
+        style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="assets/img/monogram_logo.svg" alt="Jaenudin Suwandi Logo" width="40" height="40"
+          style="display: block;">
+
+        <div class="logo-meta">
+          <span class="logo-name" style="font-weight: 700; display: block; color: #ffffff; font-size: 1rem;">Jaenudin
+            Suwandi</span>
+          <span class="logo-subtitle" style="font-size: 0.75rem; color: #a1a1aa; display: block;">Supply Chain & Tech
+            Hybrid</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">About</a>
+        <a href="portfolio.html" class="nav-item active">Portfolio</a>
+        <a href="experience.html" class="nav-item">Experience</a>
+        <a href="contact.html" class="nav-item">Contact</a>
+      </nav>
+
+      <div class="nav-controls">
+        <button type="button" class="btn-icon" id="themeToggleBtn" aria-label="Toggle dark mode">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"></svg>
+        </button>
+        <a href="admin/index.html" class="btn-nav-admin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <span>Admin</span>
+        </a>
+        <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <span class="page-eyebrow">// Case Studies and Projects</span>
+        <h1 class="page-title">Digital Solutions Built for Real Business Problems</h1>
+        <p class="page-lead">
+          Combining full-stack software craftsmanship with deep domain knowledge in manufacturing operations and
+          supply chain systems.
+        </p>
+      </div>
+
+      <div class="projects-grid" id="portfolioProjectsList">
+        <div id="portfolioLoadingState"
+          style="text-align: center; padding: 4rem 0; color: #94a3b8; font-family: var(--font-mono); font-size: 0.9rem;">
+          // Loading projects...
+        </div>
+      </div>
+
+      <div style="padding: 70px 0; text-align: center;">
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Have a project or operational challenge in mind?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.75rem;">Let us discuss how we can build custom digital
+          tools to streamline your workflows.</p>
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        &copy; 2026 <strong>Jaenudin Suwandi, S.Kom.</strong> — Karawang, West Java, Indonesia.
+      </div>
+      <div class="footer-links">
+        <a href="index.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="experience.html">Experience</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin/index.html" style="color: var(--accent-dev); font-weight: 600;">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

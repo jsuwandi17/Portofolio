@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Career Journey, Work History, SAP ERP mastery, and Technical Competencies of Jaenudin Suwandi — PPIC & Supply Chain Specialist.">
+  <title>Career Journey & Skills — Jaenudin Suwandi</title>
+
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+</head>
+
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="site-logo"
+        style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="assets/img/monogram_logo.svg" alt="Jaenudin Suwandi Logo" width="40" height="40"
+          style="display: block;">
+
+        <div class="logo-meta">
+          <span class="logo-name" style="font-weight: 700; display: block; color: #ffffff; font-size: 1rem;">Jaenudin
+            Suwandi</span>
+          <span class="logo-subtitle" style="font-size: 0.75rem; color: #a1a1aa; display: block;">Supply Chain & Tech
+            Hybrid</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">About</a>
+        <a href="portfolio.html" class="nav-item">Portfolio</a>
+        <a href="experience.html" class="nav-item active">Experience</a>
+        <a href="contact.html" class="nav-item">Contact</a>
+      </nav>
+
+      <div class="nav-controls">
+        <button type="button" class="btn-icon" id="themeToggleBtn" aria-label="Toggle dark mode">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"></svg>
+        </button>
+        <a href="admin/index.html" class="btn-nav-admin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <span>Admin</span>
+        </a>
+        <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <span class="page-eyebrow">// Career & Skillset</span>
+        <h1 class="page-title">Experience, Operations & Technical Stack</h1>
+        <p class="page-lead">
+          A track record of high-stakes manufacturing operations, SAP ERP inventory control, and software engineering
+          capabilities.
+        </p>
+      </div>
+
+      <!-- Outstanding Achievement Spotlight (di-render dinamis) -->
+      <div class="award-banner-card">
+        <div class="award-icon-box">🏆</div>
+        <div class="award-details">
+          <span class="badge badge-gold" id="awardBadge" style="margin-bottom: 0.5rem;">Special Recognition — February
+            2025</span>
+          <h3 id="awardTitle">Outstanding Achievement in Product Reprocessing</h3>
+          <div class="award-meta" id="awardMeta">PT Asian Paints Indonesia • Salvaged &gt;IDR 1,000,000,000 in
+            Inventory Value</div>
+          <p id="awardDesc">
+            Planned, scheduled, and supervised the reprocessing of expired returned paint batches valued at over
+            <strong>IDR 1 Billion</strong>. Recovered prime chemical raw materials, eliminated substantial scrap
+            write-offs, and maintained 100% adherence to standard customer order timelines.
+          </p>
+        </div>
+      </div>
+
+      <!-- Main Layout: Timeline (Left) + Skills & Education (Right) -->
+      <div class="experience-layout">
+
+        <!-- Left: Work History Timeline (di-render dinamis) -->
+        <div class="timeline-column">
+          <h2 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 2rem;">Work History Timeline
+          </h2>
+
+          <div class="timeline-stream" id="timelineStream">
+            <!-- Fallback statis: dipakai hanya jika content.json gagal dimuat -->
+            <div class="timeline-entry">
+              <div class="timeline-node current"></div>
+              <div class="timeline-card-clean">
+                <div class="entry-header">
+                  <div>
+                    <h3 class="entry-role">PPIC Staff</h3>
+                    <div class="entry-company">PT Asian Paints Indonesia</div>
+                  </div>
+                  <span class="entry-period">April 2020 — Present</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                  Overseeing plant master production scheduling (MPS), SAP MRP runs, and material availability for
+                  chemical paint manufacturing.
+                </p>
+                <ul class="entry-bullets">
+                  <li>Formulate weekly/monthly MPS aligned with plant machine capacity and dynamic market order
+                    requests.</li>
+                  <li>Execute SAP ERP MRP routines; manage inventory parameters, safety stock buffers, and Bill of
+                    Materials (BoM) maintenance.</li>
+                  <li>Partner across Sales, Warehouse, Quality Control, and Production to uphold 98%+ OTIF delivery
+                    performance.</li>
+                  <li>Spearheaded February 2025 expired paint reprocessing campaign salvaging &gt;IDR 1B in raw
+                    materials.</li>
+                </ul>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem;">
+                  <span class="tag-item">SAP ERP</span>
+                  <span class="tag-item">MRP</span>
+                  <span class="tag-item">BoM Structuring</span>
+                  <span class="tag-item">Stock Optimization</span>
+                  <span class="tag-item">Reprocessing Strategy</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Skills Matrix & Education -->
+        <div class="skills-column">
+
+          <!-- Operations & ERP Card -->
+          <div class="skill-category-card">
+            <div class="category-header">
+              <div style="color: var(--accent-chain);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+              </div>
+              <div>
+                <h3>Operations & ERP Skills</h3>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Supply Chain & Production Planning</span>
+              </div>
+            </div>
+
+            <div id="opsSkills">
+              <!-- Fallback statis -->
+              <div class="skill-row">
+                <div class="skill-meta">
+                  <span>SAP ERP (PP & Inventory)</span>
+                  <span style="color: var(--accent-chain);">95% • 5+ Yrs</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" style="width: 95%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tech & Automation Card -->
+          <div class="skill-category-card">
+            <div class="category-header">
+              <div style="color: var(--accent-dev);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <div>
+                <h3>Tech & Automation Stack</h3>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Web Development & Data Systems</span>
+              </div>
+            </div>
+
+            <div id="techSkills">
+              <!-- Fallback statis -->
+              <div class="skill-row">
+                <div class="skill-meta">
+                  <span>Laravel & PHP</span>
+                  <span style="color: var(--accent-dev);">85%</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill dev" style="width: 85%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education Card -->
+          <div class="skill-category-card" style="border-top: 3px solid var(--accent-dev);">
+            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 0.35rem;">Academic
+              Foundation</h3>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);" id="eduDegree">
+              Bachelor of Informatics Engineering (S.Kom.)
+            </div>
+            <div style="font-size: 0.88rem; color: var(--accent-dev); font-weight: 600; margin-bottom: 0.5rem;"
+              id="eduInst">
+              Singaperbangsa University (UNSIKA) • GPA: 3.00 / 4.00
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;" id="eduDesc">
+              Formal computer science curriculum emphasizing relational database modeling, software architecture, and
+              algorithm optimization — directly applied to supply chain data engineering.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        &copy; 2026 <strong>Jaenudin Suwandi, S.Kom.</strong> — Karawang, West Java, Indonesia.
+      </div>
+      <div class="footer-links">
+        <a href="index.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="experience.html">Experience</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin/index.html" style="color: var(--accent-dev); font-weight: 600;">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

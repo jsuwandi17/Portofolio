@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Jaenudin Suwandi — Hybrid PPIC & Supply Chain Specialist and Full-Stack Web Developer. Optimizing manufacturing operations and enterprise systems.">
+  <title>Jaenudin Suwandi — Supply Chain Specialist & Full-Stack Developer</title>
+
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+</head>
+
+<body>
+
+  <!-- ==========================================================================
+       Site Header & Navigation
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="site-logo"
+        style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="assets/img/monogram_logo.svg" alt="Jaenudin Suwandi Logo" width="40" height="40"
+          style="display: block;">
+
+        <div class="logo-meta">
+          <span class="logo-name" style="font-weight: 700; display: block; color: #ffffff; font-size: 1rem;">Jaenudin
+            Suwandi</span>
+          <span class="logo-subtitle" style="font-size: 0.75rem; color: #a1a1aa; display: block;">Supply Chain & Tech
+            Hybrid</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item active">About</a>
+        <a href="portfolio.html" class="nav-item">Portfolio</a>
+        <a href="experience.html" class="nav-item">Experience</a>
+        <a href="contact.html" class="nav-item">Contact</a>
+      </nav>
+
+      <!-- Nav Controls: Theme Switch & Admin Portal -->
+      <div class="nav-controls">
+        <button type="button" class="btn-icon" id="themeToggleBtn" aria-label="Toggle dark mode"
+          title="Toggle Light/Dark Theme">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"></svg>
+        </button>
+        <a href="admin/index.html" class="btn-nav-admin" title="Manage site content in Admin Dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <span>Admin</span>
+        </a>
+        <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         Hero Section
+         ========================================================================== -->
+    <section class="hero-section">
+      <div class="container">
+
+        <div class="hero-intro">
+          <span class="page-eyebrow">// Hello, World</span>
+          <h1 id="heroTitle">
+            I optimize manufacturing operations with <span class="chain-text">SAP ERP</span> by day, and build modern
+            <span class="dev-text">web apps</span> by night.
+          </h1>
+          <p class="hero-bio" id="heroBio">
+            Hi, I'm <strong>Jaenudin Suwandi</strong>. I bring 5+ years of factory operations excellence at PT Asian
+            Paints Indonesia together with modern software engineering skills (Laravel, Filament Admin, AI workflows) to
+            solve real business bottlenecks.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="portfolio.html" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+              View Featured Work
+            </a>
+            <a href="experience.html" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+              Explore Career & Skills
+            </a>
+            <a href="contact.html" class="btn btn-secondary">
+              Get in Touch
+            </a>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             Interactive Split Persona Component
+             ========================================================================== -->
+        <div class="dual-persona-wrapper">
+          <div class="persona-switch-bar">
+            <span class="switch-label">Focus View:</span>
+            <button type="button" class="persona-tab-btn active" data-target="all">Both Worlds</button>
+            <button type="button" class="persona-tab-btn" data-target="chain">Supply Chain & Operations</button>
+            <button type="button" class="persona-tab-btn" data-target="dev">Full-Stack Development</button>
+          </div>
+
+          <div class="dual-persona-grid">
+            <!-- Left Side: Supply Chain & PPIC -->
+            <div class="persona-half chain-side">
+              <div class="persona-icon-badge chain">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+              </div>
+              <h2 class="persona-title" id="personaChainTitle">PPIC & Supply Chain Specialist</h2>
+              <span class="persona-subtitle" id="personaChainSubtitle">Operations, SAP ERP & Production
+                Scheduling</span>
+              <p class="persona-desc" id="personaChainDesc">
+                Balancing complex paint manufacturing lines, planning material requirements (MRP), maintaining Bill of
+                Materials (BoM), and orchestrating plant capacity to sustain 98%+ OTIF fulfillment with zero factory
+                downtime.
+              </p>
+              <div class="persona-tags" id="personaChainTags">
+                <span class="tag-item">SAP ERP (PP & MM)</span>
+                <span class="tag-item">MRP Execution</span>
+                <span class="tag-item">BoM Structuring</span>
+                <span class="tag-item">Stock Optimization</span>
+                <span class="tag-item">Reprocessing Strategy (>IDR 1B)</span>
+              </div>
+            </div>
+
+            <!-- Right Side: Full-Stack Developer -->
+            <div class="persona-half dev-side">
+              <div class="persona-icon-badge dev">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <h2 class="persona-title" id="personaDevTitle">Full-Stack Web & Automation Developer</h2>
+              <span class="persona-subtitle" id="personaDevSubtitle">Laravel, Filament Admin & Systems Integration</span>
+              <p class="persona-desc" id="personaDevDesc">
+                Building tailor-made web applications, high-productivity backoffice dashboards, and automated data
+                scripts that empower non-technical personnel and eliminate spreadsheet friction.
+              </p>
+              <div class="persona-tags" id="personaDevTags">
+                <span class="tag-item">Laravel 11</span>
+                <span class="tag-item">Filament Admin v3</span>
+                <span class="tag-item">Tailwind CSS</span>
+                <span class="tag-item">MySQL Relational DB</span>
+                <span class="tag-item">AI-Assisted Workflow (Cursor/AGY)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Featured Case Studies Preview (di-render dinamis dari content.json)
+         ========================================================================== -->
+    <section class="home-section">
+      <div class="container">
+        <div class="section-top-row">
+          <div class="section-heading-group">
+            <h2>Featured Work</h2>
+            <p>Digital solutions built to resolve real industrial & operational challenges.</p>
+          </div>
+          <a href="portfolio.html" class="link-arrow">
+            <span>View All Projects</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-case-card" id="featuredProject">
+            <!-- Fallback statis (dipakai kalau content.json gagal dimuat) -->
+            <div class="project-card-visual">
+              <div class="browser-mockup">
+                <div class="browser-bar">
+                  <span class="browser-dot dot-red"></span>
+                  <span class="browser-dot dot-yellow"></span>
+                  <span class="browser-dot dot-green"></span>
+                </div>
+                <div class="browser-screen">
+                  <div>$resource = JumboBagCatalog::class;</div>
+                  <div>// Filament Admin Panel v3</div>
+                  <div class="metric-big">Bespoke Admin & Catalog</div>
+                </div>
+              </div>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-eyebrow">
+                <span class="badge badge-dev">Laravel & Filament</span>
+                <span class="badge badge-chain">Manufacturing Web</span>
+              </div>
+              <h3 class="project-card-title">Corporate Web & Custom Admin Panel — Jumbo Bag Manufacturing</h3>
+              <p class="project-card-desc">
+                Engineered an end-to-end company profile and dynamic administrative management portal for a heavy-duty
+                industrial jumbo bag manufacturer.
+              </p>
+              <div class="project-detail-box">
+                <strong>Business Value Delivered:</strong>
+                Empowered non-technical plant staff to independently manage product specs (SWL, safety factors, loop
+                styles) with zero IT overhead, shrinking quote turnarounds to under 24 hours.
+              </div>
+              <div class="project-tech-pills">
+                <span class="tag-item">Laravel 11</span>
+                <span class="tag-item">Filament v3</span>
+                <span class="tag-item">Tailwind CSS</span>
+                <span class="tag-item">MySQL</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Career Highlight & Award Callout (di-render dinamis)
+         ========================================================================== -->
+    <section class="home-section" style="background: var(--bg-surface);">
+      <div class="container">
+        <div class="section-top-row">
+          <div class="section-heading-group">
+            <h2>Proven Operational Impact</h2>
+            <p>Highlights from over half a decade in manufacturing supply chain execution.</p>
+          </div>
+          <a href="experience.html" class="link-arrow">
+            <span>View Full Career Timeline</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="award-banner-card">
+          <div class="award-icon-box">🏆</div>
+          <div class="award-details">
+            <span class="badge badge-gold" id="homeAwardBadge" style="margin-bottom: 0.5rem;">February 2025
+              Recognition</span>
+            <h3 id="homeAwardTitle">Outstanding Achievement in Product Reprocessing</h3>
+            <div class="award-meta" id="homeAwardMeta">PT Asian Paints Indonesia • Salvaged &gt;IDR 1,000,000,000</div>
+            <p id="homeAwardDesc">
+              Orchestrated and planned the reprocessing of expired returned paint batches valued above IDR 1 Billion,
+              rescuing critical chemical components and reducing inventory write-offs without throttling regular
+              customer production runs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Call to Action Banner
+         ========================================================================== -->
+    <section class="home-section" style="text-align: center;">
+      <div class="container">
+        <span class="page-eyebrow">// Ready to collaborate?</span>
+        <h2 style="font-family: var(--font-heading); font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem;">
+          Let's discuss how I can help streamline your operations & systems.
+        </h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem;">
+          Whether you need an experienced PPIC planner, an SAP ERP inventory specialist, or a developer to automate
+          your workflows, I'm available for strategic roles.
+        </p>
+        <div class="hero-cta-group">
+          <a href="contact.html" class="btn btn-primary">Start a Conversation</a>
+          <a href="https://wa.me/628974208174?text=Hello%20Jaenudin,%20I%20viewed%20your%20portfolio%20and%20would%20like%20to%20connect."
+            target="_blank" rel="noopener noreferrer" class="btn btn-secondary wa-dynamic-link">
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Site Footer
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        &copy; 2026 <strong>Jaenudin Suwandi, S.Kom.</strong> — Karawang, West Java, Indonesia.
+      </div>
+      <div class="footer-links">
+        <a href="portfolio.html">Portfolio</a>
+        <a href="experience.html">Experience</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin/index.html" style="color: var(--accent-dev); font-weight: 600;">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript -->
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

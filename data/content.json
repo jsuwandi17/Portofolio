@@ -1,0 +1,229 @@
+{
+  "profile": {
+    "name": "Jaenudin Suwandi",
+    "degree": "S.Kom.",
+    "rolePrimary": "PPIC & Supply Chain Specialist",
+    "roleSecondary": "Full-Stack Web Developer",
+    "location": "Karawang, West Java, Indonesia",
+    "email": "jaenudin.suwandi17@gmail.com",
+    "phone": "08974208174",
+    "whatsappUrl": "https://wa.me/628974208174?text=Hello%20Jaenudin,%20I%20viewed%20your%20portfolio%20and%20would%20like%20to%20connect.",
+    "linkedin": "https://linkedin.com",
+    "github": "https://github.com",
+    "heroHeadline": "I turn production planning into smarter, data-driven operations with SAP ERP and Digital Solutions.",
+    "heroBio": "Hi, I'm Jaenudin Suwandi, a PPIC professional with 5+ years of manufacturing experience, specializing in production planning, MRP, inventory control, and SAP ERP — with a passion for building digital solutions that improve operational efficiency.",
+    "differentiator": "Combines 5+ years of operational supply chain expertise (SAP ERP, MRP, inventory control) with modern web development skills (Laravel, Filament Admin, Tailwind CSS, AI-Assisted Workflows) to build practical tools that solve real operational bottlenecks.",
+    "experienceYears": 5,
+    "salvagedValue": ">IDR 1B",
+    "mrpAccuracy": "100%",
+    "verified": true
+  },
+  "persona": {
+    "supplyChain": {
+      "title": "PPIC & Supply Chain Specialist",
+      "subtitle": "Operations, SAP ERP & Inventory",
+      "description": "Planning factory production lines, balancing capacity, running SAP MRP routines, and preventing costly material shortages across manufacturing operations.",
+      "skills": [
+        "SAP ERP (PP & MM)",
+        "Material Requirements Planning (MRP)",
+        "Bill of Materials (BoM)",
+        "Safety Stock Optimization",
+        "Batch Reprocessing",
+        "OTIF Delivery Fulfillment"
+      ]
+    },
+    "developer": {
+      "title": "Full-Stack Web & Automation Developer",
+      "subtitle": "Laravel, Filament Admin & Systems",
+      "description": "Architecting bespoke web applications, custom management panels, and data automation scripts that empower non-technical teams and eliminate manual busywork.",
+      "skills": [
+        "Laravel & PHP",
+        "Filament Admin v3",
+        "Tailwind CSS",
+        "MySQL Relational Databases",
+        "AI-Assisted Workflows (Cursor / AGY)",
+        "Advanced Excel & Data Analytics"
+      ]
+    }
+  },
+  "projects": [
+    {
+      "id": "jumbo-bag",
+      "title": "Corporate Web & Custom Admin Panel — Jumbo Bag Manufacturing",
+      "category": "Full-Stack Web App",
+      "badge": "Production Web App",
+      "summary": "Built a complete company profile and custom management system for a heavy-duty industrial jumbo bag (FIBC) manufacturing business.",
+      "challenge": "Non-technical plant staff and sales representatives struggled to update technical specifications (Safe Working Load / SWL, loop configurations, discharge spouts) and handle disorganized quote inquiries through static spreadsheets.",
+      "solution": "Engineered a custom web application with Laravel 11 and Filament Admin v3, providing an intuitive dashboard for catalog management, specification updates, and structured RFQ inquiry handling.",
+      "businessValue": "Enabled non-technical staff to autonomously manage product catalogs and specifications with zero developer dependency, while cutting quote turnaround time to under 24 hours.",
+      "techStack": [
+        "Laravel 11",
+        "Filament Admin v3",
+        "Tailwind CSS",
+        "MySQL",
+        "AI-Assisted Workflow"
+      ],
+      "liveUrl": "#",
+      "metrics": "100% Staff Autonomy • <24h Quote Turnaround"
+    }
+  ],
+  "experience": [
+    {
+      "id": "exp-1",
+      "role": "PPIC Staff",
+      "company": "PT Asian Paints Indonesia",
+      "period": "April 2020 — Present",
+      "current": true,
+      "location": "Karawang, West Java",
+      "description": "Responsible for Master Production Scheduling (MPS), SAP MRP runs, material replenishment, and cross-department manufacturing synchronization.",
+      "bulletPoints": [
+        "Formulate weekly and monthly Master Production Schedules (MPS) balancing manufacturing plant capacity and customer order demand.",
+        "Execute SAP ERP MRP cycles to optimize raw material inventory, batch sizing, safety stock levels, and multi-level BoMs.",
+        "Partner closely with Sales, Warehouse, Quality Control, and Production to uphold 98%+ On-Time In-Full (OTIF) fulfillment.",
+        "Spearheaded the planning and execution of expired returned paint reprocessing valued at >IDR 1 Billion in February 2025."
+      ],
+      "tags": [
+        "SAP ERP",
+        "Production Planning",
+        "MRP",
+        "BoM Structuring",
+        "Inventory Optimization"
+      ]
+    },
+    {
+      "id": "exp-2",
+      "role": "SAP Data & Inventory Staff",
+      "company": "PT Asian Paints Indonesia",
+      "period": "July 2019 — April 2020",
+      "current": false,
+      "location": "Karawang, West Java",
+      "description": "Enforced enterprise data integrity across commercial, logistics, and financial modules in SAP while managing periodic inventory reconciliation audits.",
+      "bulletPoints": [
+        "Ensured 100% synchronicity of transactional records between Sales orders, Warehouse movements, and Finance general ledger in SAP ERP.",
+        "Performed weekly master data governance on material valuations, batch tracking numbers, and storage locations.",
+        "Built automated Excel reporting models utilizing advanced Pivot Tables and lookup matrices to analyze daily stock discrepancies."
+      ],
+      "tags": [
+        "SAP Data Governance",
+        "Inventory Audits",
+        "Master Data",
+        "Excel Analytics"
+      ]
+    },
+    {
+      "id": "exp-3",
+      "role": "Scheduler",
+      "company": "PT Cakrawala Mitra Bersama",
+      "period": "May 2018 — 2019",
+      "current": false,
+      "location": "West Java",
+      "description": "Managed operational dispatching, multi-route logistical optimization, and technician task scheduling across regional ATM banking infrastructures.",
+      "bulletPoints": [
+        "Optimized travel routes and task dispatching for engineering field teams under strict Service Level Agreements (SLAs).",
+        "Monitored real-time incident resolution tickers to minimize ATM hardware downtime and banking service interruptions."
+      ],
+      "tags": [
+        "Route Optimization",
+        "Resource Scheduling",
+        "SLA Management",
+        "Field Operations"
+      ]
+    },
+    {
+      "id": "exp-4",
+      "role": "ATM Technician",
+      "company": "PT Cakrawala Mitra Bersama",
+      "period": "August 2017 — 2018",
+      "current": false,
+      "location": "West Java",
+      "description": "Hands-on field engineering role executing first-line diagnostics, electronics repair, preventive maintenance, and cash dispenser systems.",
+      "bulletPoints": [
+        "Diagnosed electromechanical and software faults on commercial automated teller machines (ATMs).",
+        "Conducted preventive maintenance routines to maintain 99%+ machine uptime across regional bank branches."
+      ],
+      "tags": [
+        "Hardware Diagnostics",
+        "Preventive Maintenance",
+        "System Troubleshooting",
+        "Technical Support"
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "id": "achieve-1",
+      "title": "Outstanding Achievement in Product Reprocessing",
+      "date": "February 2025",
+      "organization": "PT Asian Paints Indonesia",
+      "value": ">IDR 1 Billion",
+      "description": "Successfully planned and scheduled the conversion of expired returned paint batches into usable products, salvaging over IDR 1,000,000,000 in raw material value and eliminating inventory write-offs without impacting regular customer orders."
+    }
+  ],
+  "skills": {
+    "operations": [
+      {
+        "name": "SAP ERP (PP & Inventory Management)",
+        "level": 95,
+        "badge": "5+ Years Expert"
+      },
+      {
+        "name": "Material Requirements Planning (MRP)",
+        "level": 92,
+        "badge": "Advanced"
+      },
+      {
+        "name": "SKU & Bill of Materials (BoM) Structuring",
+        "level": 90,
+        "badge": "Advanced"
+      },
+      {
+        "name": "Production Scheduling & Line Balancing",
+        "level": 92,
+        "badge": "Advanced"
+      },
+      {
+        "name": "Stock Analysis & Reprocessing Strategy",
+        "level": 96,
+        "badge": "Specialized"
+      }
+    ],
+    "tech": [
+      {
+        "name": "Laravel & Modern PHP",
+        "level": 85,
+        "badge": "Full-Stack"
+      },
+      {
+        "name": "Filament Admin v3 & TALL Stack",
+        "level": 88,
+        "badge": "Custom Dashboards"
+      },
+      {
+        "name": "Tailwind CSS & Responsive UI",
+        "level": 85,
+        "badge": "Modern Styling"
+      },
+      {
+        "name": "MySQL & Relational Data Modeling",
+        "level": 88,
+        "badge": "Database Design"
+      },
+      {
+        "name": "AI-Assisted Workflow (Cursor / AGY)",
+        "level": 90,
+        "badge": "Rapid Velocity"
+      },
+      {
+        "name": "Advanced Excel (Pivot, Power Query)",
+        "level": 95,
+        "badge": "Expert Analytics"
+      }
+    ]
+  },
+  "education": {
+    "degree": "Bachelor of Informatics Engineering (Sarjana Komputer)",
+    "institution": "Singaperbangsa University (UNSIKA)",
+    "gpa": "3.00 / 4.00",
+    "description": "Strong foundation in software engineering, relational database management (RDBMS), algorithms, and systems analysis. This formal computer science background provides an unfair analytical advantage when configuring complex ERP systems and writing custom automation scripts."
+  }
+}

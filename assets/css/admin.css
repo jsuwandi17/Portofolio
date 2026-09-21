@@ -1,0 +1,274 @@
+/* ==========================================================================
+   JAENUDIN SUWANDI — ADMIN DASHBOARD STYLESHEET
+   Clean, focused, modern administrative interface
+   ========================================================================== */
+
+:root {
+  --admin-bg: #f8fafc;
+  --admin-sidebar-bg: #0f172a;
+  --admin-card-bg: #ffffff;
+  --admin-border: #e2e8f0;
+  --admin-text-main: #0f172a;
+  --admin-text-muted: #64748b;
+  --admin-primary: #0284c7;
+  --admin-success: #10b981;
+  --admin-danger: #ef4444;
+  --admin-radius: 10px;
+}
+
+body.admin-body {
+  background-color: var(--admin-bg);
+  color: var(--admin-text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Auth Login Modal / Gate */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 420px;
+  width: 100%;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.auth-lock-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+}
+
+.auth-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: #0f172a;
+}
+
+.auth-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 1.75rem;
+}
+
+/* Main Admin Layout */
+.admin-sidebar {
+  width: 260px;
+  background: var(--admin-sidebar-bg);
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.25rem;
+  flex-shrink: 0;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.admin-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--admin-radius);
+  color: #94a3b8;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.admin-tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-tab-btn.active {
+  color: #ffffff;
+  background: var(--admin-primary);
+}
+
+.admin-sidebar-footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  overflow-y: auto;
+  max-width: 1100px;
+}
+
+.admin-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.admin-actions-bar {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.admin-card {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.admin-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.item-editor-card {
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: #fafafa;
+  position: relative;
+}
+
+.item-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--admin-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-admin-primary {
+  background: var(--admin-primary);
+  color: #fff;
+}
+.btn-admin-primary:hover {
+  background: #0369a1;
+}
+
+.btn-admin-success {
+  background: var(--admin-success);
+  color: #fff;
+}
+.btn-admin-success:hover {
+  background: #059669;
+}
+
+.btn-admin-danger {
+  background: #fee2e2;
+  color: var(--admin-danger);
+}
+.btn-admin-danger:hover {
+  background: #fecaca;
+}
+
+.btn-admin-secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+.btn-admin-secondary:hover {
+  background: #cbd5e1;
+}
+
+/* Toast */
+.admin-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.85rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 6000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+.admin-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}

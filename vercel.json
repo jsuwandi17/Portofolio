@@ -2,19 +2,18 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "functions": {
-    "api/**/*.js": {
+    "api/*.js": {
       "runtime": "nodejs18.x"
     }
   },
-  "headers": [
+  "routes": [
     {
-      "source": "/data/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, must-revalidate"
-        }
-      ]
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }

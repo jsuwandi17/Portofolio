@@ -1,30 +1,15 @@
-/**
- * /api/save-content.js — Vercel Serverless Function
- * Menerima POST JSON dari Admin Dashboard, lalu commit ke GitHub repo
- * sehingga Vercel auto-deploy dan situs ter-update otomatis.
- *
- * Env vars (Vercel Dashboard → Settings → Environment Variables):
- *   GITHUB_TOKEN  : Personal Access Token dengan akses Contents: Read & Write
- *   GITHUB_OWNER  : username GitHub (mis. jsuwandi17)
- *   GITHUB_REPO   : nama repo (mis. Portfolio)
- *   GITHUB_BRANCH : (opsional, default "main")
- *   GITHUB_FILE_PATH : (opsional, default "data/content.json")
- */
-
 export default async function handler(req, res) {
-  // CORS
+  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    res.status(204).end();
-    return;
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
-    res.status(405).json({ success: false, error: 'Method not allowed' });
-    return;
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
   const token = process.env.GITHUB_TOKEN;
@@ -33,26 +18,23 @@ export default async function handler(req, res) {
   const branch = process.env.GITHUB_BRANCH || 'main';
   const filePath = process.env.GITHUB_FILE_PATH || 'data/content.json';
 
-  // Kalau GitHub belum dikonfigurasi → bilang ke client utk fallback localStorage
   if (!token || !owner || !repo) {
-    res.status(200).json({
+    return res.status(200).json({
       success: false,
       fallback: true,
-      message: 'GitHub integration not configured on server.'
+      message: 'GitHub integration not configured on server environment variables.'
     });
-    return;
   }
 
   try {
-    const newContent = JSON.stringify(req.body, null, 2);
+    const newContent = typeof req.body === 'string' ? req.body : JSON.stringify(req.body, null, 2);
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
     const headers = {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28'
+      'User-Agent': 'Vercel-Serverless-Admin'
     };
 
-    // Ambil SHA file yang ada (wajib utk update file existing)
     let sha = undefined;
     const getRes = await fetch(`${apiUrl}?ref=${encodeURIComponent(branch)}`, { headers });
     if (getRes.ok) {
@@ -60,13 +42,15 @@ export default async function handler(req, res) {
       sha = existing.sha;
     }
 
-    // Commit file baru
+    // Menggunakan Buffer secara aman
+    const base64Content = Buffer.from(newContent, 'utf-8').toString('base64');
+
     const putRes = await fetch(apiUrl, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
-        message: 'chore: update content.json via Admin Dashboard',
-        content: btoa(unescape(encodeURIComponent(newContent))),
+        message: 'chore: update content via Admin Dashboard',
+        content: base64Content,
         branch,
         ...(sha ? { sha } : {})
       })
@@ -74,15 +58,14 @@ export default async function handler(req, res) {
 
     if (!putRes.ok) {
       const errText = await putRes.text();
-      res.status(500).json({ success: false, error: `GitHub API error: ${errText}` });
-      return;
+      return res.status(500).json({ success: false, error: `GitHub API error: ${errText}` });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: 'Saved to GitHub! Situs akan ter-update otomatis dalam ~1 menit (Vercel re-deploy).'
+      message: 'Saved to GitHub! Situs akan ter-update otomatis dalam ~1 menit.'
     });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    return res.status(500).json({ success: false, error: err.message });
   }
 }

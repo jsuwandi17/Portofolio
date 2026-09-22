@@ -73,10 +73,27 @@ function highlightHeadline(text) {
 // =========================================================================
 function renderAllPages(data) {
   if (!data) return;
+  applySettings(data.settings);
   renderHomePage(data);
   renderPortfolioProjects(data.projects || []);
   renderExperiencePage(data);
   renderContactPage(data.profile || {});
+}
+
+function applySettings(settings) {
+  if (!settings) return;
+  const logoImg = document.getElementById('siteLogoImg');
+  if (logoImg && settings.logoUrl) {
+    logoImg.src = settings.logoUrl;
+  }
+  if (settings.backgroundUrl) {
+    document.body.style.backgroundImage = `url('${settings.backgroundUrl}')`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundAttachment = 'fixed';
+  } else {
+    document.body.style.backgroundImage = '';
+  }
 }
 
 // =========================================================================

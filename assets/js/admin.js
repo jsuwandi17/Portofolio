@@ -76,6 +76,15 @@ function populateAllTabs() {
   populateExperienceTab();
   populateSkillsTab();
   populateAchievementsTab();
+  populateSettingsTab();
+}
+
+function populateSettingsTab() {
+  const s = currentData.settings || {};
+  const logoInput = document.getElementById('settingLogoUrl');
+  const bgInput = document.getElementById('settingBackgroundUrl');
+  if (logoInput) logoInput.value = s.logoUrl || '';
+  if (bgInput) bgInput.value = s.backgroundUrl || '';
 }
 
 function populateProfileTab() {
@@ -322,6 +331,12 @@ async function saveAllChanges() {
     currentData.profile.heroBio = document.getElementById('profileBio').value;
     currentData.profile.differentiator = document.getElementById('profileDiff').value;
   }
+  
+  if (!currentData.settings) currentData.settings = {};
+  const logoInput = document.getElementById('settingLogoUrl');
+  const bgInput = document.getElementById('settingBackgroundUrl');
+  if (logoInput) currentData.settings.logoUrl = logoInput.value;
+  if (bgInput) currentData.settings.backgroundUrl = bgInput.value;
 
   // 1. Selalu sync localStorage (update instan di browser ini + picu event storage)
   localStorage.setItem('portfolio_content', JSON.stringify(currentData));

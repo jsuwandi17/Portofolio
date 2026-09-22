@@ -1,4 +1,8 @@
 {
+  "settings": {
+    "logoUrl": "assets/img/monogram_logo.svg",
+    "backgroundUrl": ""
+  },
   "profile": {
     "name": "Jaenudin Suwandi",
     "degree": "S.Kom.",

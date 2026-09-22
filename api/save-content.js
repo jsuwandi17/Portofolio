@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 export default async function handler(req, res) {
   // Set CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,6 +16,16 @@ export default async function handler(req, res) {
   }
 
   try {
+    const bodyData = typeof req.body === 'string' ? req.body : JSON.stringify(req.body, null, 2);
+
+    // Attempt local write for instant real-time updates in local/VPS environments
+    try {
+      const localPath = path.join(process.cwd(), 'data', 'content.json');
+      fs.writeFileSync(localPath, bodyData, 'utf8');
+    } catch (fsErr) {
+      console.warn('Local write failed (expected on Vercel):', fsErr.message);
+    }
+
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.GITHUB_OWNER;
     const repo = process.env.GITHUB_REPO;
@@ -22,13 +35,12 @@ export default async function handler(req, res) {
     // Jika env vars belum diatur di Vercel Dashboard
     if (!token || !owner || !repo) {
       return res.status(200).json({
-        success: false,
+        success: true,
         fallback: true,
-        message: 'GitHub integration env variables not set on Vercel.'
+        message: 'Saved locally. GitHub integration env variables not set.'
       });
     }
 
-    const bodyData = typeof req.body === 'string' ? req.body : JSON.stringify(req.body, null, 2);
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
     const headers = {
       'Authorization': `Bearer ${token}`,

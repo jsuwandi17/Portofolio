@@ -104,6 +104,14 @@
         </svg>
         <span>Achievements</span>
       </button>
+
+      <button type="button" class="admin-tab-btn" data-tab="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        <span>Site Settings</span>
+      </button>
     </nav>
 
     <div class="admin-sidebar-footer">
@@ -251,6 +259,25 @@
       <div class="admin-card">
         <h2 class="admin-card-title">Awards & Milestones</h2>
         <div id="achievementsContainer"></div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Settings -->
+    <div class="admin-tab-section" id="settingsSection" style="display: none;">
+      <div class="admin-card">
+        <h2 class="admin-card-title">Branding & Visuals</h2>
+        
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label">Custom Logo URL (SVG, PNG, JPG)</label>
+          <input type="text" id="settingLogoUrl" class="form-control" placeholder="assets/img/monogram_logo.svg">
+          <small style="color: var(--admin-text-muted); display: block; margin-top: 0.25rem;">Leave empty to use the default Jaenudin Suwandi monogram.</small>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label">Custom Background Image URL</label>
+          <input type="text" id="settingBackgroundUrl" class="form-control" placeholder="https://example.com/bg.jpg">
+          <small style="color: var(--admin-text-muted); display: block; margin-top: 0.25rem;">Leave empty to use the sleek dark mode default background.</small>
+        </div>
       </div>
     </div>
 

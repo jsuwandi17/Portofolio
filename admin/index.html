@@ -283,8 +283,35 @@
 
   </main>
 
-  <script src="../admin.js"></script>
-<script src="../js/admin.js"></script>
+  <script>
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
+      const overlay = document.getElementById('authOverlay');
+      if (overlay) {
+        overlay.style.display = isAuth ? 'none' : 'flex';
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminUser').value;
+      const pass = document.getElementById('adminPass').value;
+
+      if (user === 'admin' && pass === 'admin123') {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        checkAuth();
+        alert('Login berhasil! Selamat datang Jaenudin.');
+      } else {
+        document.getElementById('authError').textContent = 'Username atau Password salah! (Hint: admin / admin123)';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      document.getElementById('authForm')?.addEventListener('submit', handleLogin);
+    });
+  </script>
+  <script src="../js/admin.js"></script>
 </body>
 
 </html>

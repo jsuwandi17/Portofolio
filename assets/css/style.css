@@ -15,17 +15,14 @@
 
   /* Accent Colors */
   --accent-chain: #10b981;
-  /* Vibrant Emerald for Supply Chain / Operations */
   --accent-chain-light: rgba(16, 185, 129, 0.16);
   --accent-chain-border: rgba(16, 185, 129, 0.35);
 
   --accent-dev: #38bdf8;
-  /* Bright Cyan / Indigo for Full-Stack Development */
   --accent-dev-light: rgba(56, 189, 248, 0.16);
   --accent-dev-border: rgba(56, 189, 248, 0.35);
 
   --accent-gold: #fbbf24;
-  /* Gold for Awards */
   --accent-gold-light: rgba(251, 191, 36, 0.16);
 
   /* Elevation & Shadows */
@@ -85,6 +82,30 @@ body {
   background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
   background-position: 0 0, 0 0, -1px -1px, -1px -1px !important;
   background-attachment: fixed !important;
+}
+
+/* ==========================================================================
+   WATERMARK LOGO DI BACKGROUND BODY
+   ========================================================================== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(72vw, 540px);
+  height: min(72vw, 540px);
+  transform: translate(-50%, -50%);
+  background: url('../img/monogram_logo.svg') no-repeat center center / contain;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Pastikan konten selalu di atas watermark */
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Headings & Base Typography Defaults */
@@ -171,6 +192,13 @@ main {
   font-family: var(--font-heading);
   font-size: 1.15rem;
   letter-spacing: -0.02em;
+  /* FIX: logo gak boleh menciut / wrap saat layar kecil */
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.site-logo img {
+  flex-shrink: 0;
 }
 
 .logo-monogram {
@@ -185,17 +213,22 @@ main {
   font-weight: 800;
   font-size: 1rem;
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  flex-shrink: 0;
 }
 
 .logo-meta {
   display: flex;
   flex-direction: column;
+  /* FIX: teks logo gak boleh wrap vertikal */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .logo-name {
   color: #ffffff !important;
   font-weight: 700;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .logo-subtitle {
@@ -203,6 +236,7 @@ main {
   color: #a1a1aa !important;
   font-weight: 500;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .nav-links {
@@ -210,7 +244,6 @@ main {
   align-items: center !important;
   gap: 1.75rem !important;
   margin: 0 auto !important;
-  /* Dorong menu ke tengah */
 }
 
 .nav-item {
@@ -220,6 +253,7 @@ main {
   position: relative;
   padding: 0.5rem 0;
   transition: var(--transition);
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -260,6 +294,7 @@ main {
   align-items: center;
   justify-content: center;
   transition: var(--transition);
+  flex-shrink: 0;
 }
 
 .btn-icon:hover {
@@ -300,10 +335,11 @@ main {
   color: #ffffff;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
-   Typography & Page Header (High Visibility on Dark Canvas)
+   Typography & Page Header
    ========================================================================== */
 .page-header {
   padding: 70px 0 45px;
@@ -484,6 +520,7 @@ main {
   border-bottom: 1px solid var(--border-color);
   padding: 0.85rem 1rem;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .switch-label {
@@ -648,7 +685,7 @@ main {
 }
 
 /* ==========================================================================
-   Portfolio Cards & Case Studies (Elegant Unified Glassmorphism)
+   Portfolio Cards & Case Studies
    ========================================================================== */
 .projects-grid {
   display: grid;
@@ -801,7 +838,7 @@ main {
 
 /* ==========================================================================
    Career Timeline & Competencies (Experience Page)
-   ========================================================================= */
+   ========================================================================== */
 .experience-layout {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -1036,7 +1073,7 @@ main {
 }
 
 /* ==========================================================================
-   Contact Page (Conversational, Clean & Direct)
+   Contact Page
    ========================================================================== */
 .contact-layout {
   display: grid;
@@ -1106,6 +1143,7 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .form-card {
@@ -1189,6 +1227,7 @@ textarea.form-control {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 /* Toast Notification */
@@ -1220,19 +1259,24 @@ textarea.form-control {
    ========================================================================== */
 @media (max-width: 900px) {
   .hero-intro h1 {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
+  }
+
+  .page-title {
+    font-size: 2.1rem;
   }
 
   .dual-persona-grid,
   .project-case-card,
   .experience-layout,
   .contact-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .project-card-visual {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem;
   }
 
   .persona-half.chain-side {
@@ -1240,17 +1284,24 @@ textarea.form-control {
     border-bottom: 1px solid var(--border-color);
   }
 
+  .persona-half {
+    padding: 2.25rem 1.5rem;
+  }
+
+  /* FIX PENTING: base rule pakai !important, jadi override-nya JUGA harus
+     pakai !important. Ini yang bikin menu mobile gak pernah jadi hamburger */
   .nav-links {
-    display: none;
+    display: none !important;
   }
 
   .mobile-toggle {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-links.open {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
+    align-items: flex-start;
     position: absolute;
     top: 76px;
     left: 0;
@@ -1260,5 +1311,135 @@ textarea.form-control {
     padding: 1.5rem;
     gap: 1rem;
     box-shadow: var(--shadow-lg);
+  }
+
+  .nav-links.open .nav-item {
+    width: 100%;
+  }
+}
+
+/* Layar kecil (HP) */
+@media (max-width: 560px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .nav-container {
+    gap: 0.5rem !important;
+  }
+
+  /* Sembunyikan teks di samping logo biar muat — logo gambar tetap kelihatan */
+  .logo-meta {
+    display: none;
+  }
+
+  .btn-nav-admin span {
+    display: none;
+  }
+
+  .btn-nav-admin {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .hero-section {
+    padding: 50px 0 60px;
+  }
+
+  .hero-intro h1 {
+    font-size: 1.85rem;
+  }
+
+  .hero-intro p.hero-bio {
+    font-size: 1.02rem;
+  }
+
+  .page-header {
+    padding: 50px 0 35px;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+
+  .page-lead {
+    font-size: 1rem;
+  }
+
+  .persona-switch-bar {
+    gap: 0.5rem;
+  }
+
+  .persona-tab-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .switch-label {
+    width: 100%;
+    text-align: center;
+  }
+
+  .project-card-content,
+  .form-card {
+    padding: 1.5rem;
+  }
+
+  .project-card-title {
+    font-size: 1.3rem;
+  }
+
+  .timeline-card-clean,
+  .skill-category-card {
+    padding: 1.35rem 1.25rem;
+  }
+
+  .timeline-stream {
+    padding-left: 1.6rem;
+  }
+
+  .timeline-node {
+    left: -1.6rem;
+  }
+
+  .entry-role {
+    font-size: 1.1rem;
+  }
+
+  .award-banner-card {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .contact-card-box {
+    padding: 1rem;
+  }
+
+  .home-section {
+    padding: 55px 0;
+  }
+
+  .section-heading-group h2 {
+    font-size: 1.6rem;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* Watermark logo lebih kecil di HP */
+  body::before {
+    width: 85vw;
+    height: 85vw;
   }
 }

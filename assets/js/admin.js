@@ -1,8 +1,9 @@
 /**
- * JAENUDIN SUWANDI — ADMIN DASHBOARD LOGIC (FIXED)
- * - initAdminData sekarang NETWORK-FIRST: selalu ambil data/content.json terbaru
- *   dari server, localStorage cuma fallback kalau server mati.
- * - Sisanya tetap sama: CRUD + simpan ke disk via /api/save-content + localStorage.
+ * JAENUDIN SUWANDI — ADMIN DASHBOARD LOGIC (FIXED utk Vercel + local)
+ * - initAdminData NETWORK-FIRST: selalu ambil data/content.json terbaru.
+ * - saveAllChanges: POST /api/save-content (Node server.js LOKAL atau
+ *   Vercel serverless function → commit ke GitHub). Kalau gagal/ belum
+ *   dikonfigurasi → fallback localStorage.
  */
 
 let currentData = null;
@@ -23,7 +24,6 @@ function handleLogin(e) {
   const user = document.getElementById('adminUser').value;
   const pass = document.getElementById('adminPass').value;
 
-  // Default credentials: admin / admin123
   if (user === 'admin' && pass === 'admin123') {
     sessionStorage.setItem('admin_logged_in', 'true');
     checkAuth();
@@ -39,11 +39,10 @@ function handleLogout() {
 }
 
 // =========================================================================
-// 2. Data Initialization — NETWORK FIRST (FIXED: dulu cache duluan = stale)
+// 2. Data Initialization — NETWORK FIRST
 // =========================================================================
 async function initAdminData() {
   try {
-    // 1) Ambil data terbaru dari server (bypass cache dengan timestamp)
     const res = await fetch('../data/content.json?t=' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
       currentData = await res.json();
@@ -59,11 +58,10 @@ async function initAdminData() {
   }
 
   if (!currentData) {
-    showAdminToast('Could not load content data. Pastikan server.js jalan & data/content.json ada.');
+    showAdminToast('Could not load content data. Pastikan data/content.json ada.');
     return;
   }
 
-  // Sinkronkan cache supaya konsisten
   localStorage.setItem('portfolio_content', JSON.stringify(currentData));
   populateAllTabs();
 }
@@ -195,7 +193,6 @@ function populateSkillsTab() {
   opsContainer.innerHTML = '';
   techContainer.innerHTML = '';
 
-  // Operations Skills
   currentData.skills.operations.forEach((sk, idx) => {
     const row = document.createElement('div');
     row.className = 'form-grid-2';
@@ -211,7 +208,6 @@ function populateSkillsTab() {
     opsContainer.appendChild(row);
   });
 
-  // Tech Skills
   currentData.skills.tech.forEach((sk, idx) => {
     const row = document.createElement('div');
     row.className = 'form-grid-2';
@@ -312,10 +308,9 @@ function deleteExperience(idx) {
 }
 
 // =========================================================================
-// 5. Persistence (Node API + LocalStorage + JSON Export)
+// 5. Persistence — POST /api/save-content (lokal: server.js, Vercel: function)
 // =========================================================================
 async function saveAllChanges() {
-  // Sync profile values
   if (currentData.profile) {
     currentData.profile.name = document.getElementById('profileName').value;
     currentData.profile.rolePrimary = document.getElementById('profileRolePrimary').value;
@@ -328,25 +323,35 @@ async function saveAllChanges() {
     currentData.profile.differentiator = document.getElementById('profileDiff').value;
   }
 
-  // 1. Sync ke LocalStorage (update instan + picu event 'storage' di tab lain)
+  // 1. Selalu sync localStorage (update instan di browser ini + picu event storage)
   localStorage.setItem('portfolio_content', JSON.stringify(currentData));
 
-  // 2. Attempt direct API save ke server.js (tulis ke data/content.json)
+  // 2. Coba simpan permanen via API
+  //    - Lokal (node server.js)  → tulis data/content.json di disk
+  //    - Vercel                  → serverless function commit ke GitHub → auto-deploy
   try {
     const res = await fetch('/api/save-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(currentData, null, 2)
+      body: JSON.stringify(currentData)
     });
-    if (res.ok) {
-      showAdminToast('Changes saved to disk (data/content.json) & synced live!');
-      return;
-    }
-  } catch (err) {
-    // Kalau dibuka static (server mati), localStorage sudah ke-update
-  }
 
-  showAdminToast('Changes saved to browser storage! Use "Download JSON" to export.');
+    if (res.ok) {
+      const result = await res.json();
+      if (result.success) {
+        showAdminToast(result.message || 'Changes saved & synced live!');
+        return;
+      }
+      if (result.fallback) {
+        showAdminToast('Tersimpan di browser ini saja. Setup GITHUB_* env vars di Vercel utk simpan permanen.');
+        return;
+      }
+    }
+    throw new Error('Save API returned error');
+  } catch (err) {
+    // Server mati / endpoint gak ada (mis. dibuka via Live Server)
+    showAdminToast('Tersimpan di browser (localStorage). Jalankan server.js / setup Vercel utk simpan permanen.');
+  }
 }
 
 function exportJSON() {
@@ -378,7 +383,7 @@ function showAdminToast(msg) {
   }
   toast.textContent = msg;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3500);
+  setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
 // =========================================================================
@@ -388,7 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   initAdminData();
 
-  // Tab switching
   const tabBtns = document.querySelectorAll('.admin-tab-btn');
   const tabSections = document.querySelectorAll('.admin-tab-section');
 
@@ -404,6 +408,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Login form handler
   document.getElementById('authForm')?.addEventListener('submit', handleLogin);
 });

@@ -33,7 +33,7 @@
       <h2 class="auth-title">Admin Management Portal</h2>
       <p class="auth-desc">Please log in to manage your portfolio, case studies, and career data.</p>
 
-      <form id="authForm">
+     <form id="authForm" onsubmit="handleLogin(event)">
         <div style="text-align: left; margin-bottom: 1.25rem;">
           <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Username</label>
           <input type="text" id="adminUser" class="form-control" placeholder="admin" required autofocus>

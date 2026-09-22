@@ -66,7 +66,7 @@ export default async function handler(req, res) {
       headers,
       body: JSON.stringify({
         message: 'chore: update content.json via Admin Dashboard',
-        content: Buffer.from(newContent, 'utf8').toString('base64'),
+        content: btoa(unescape(encodeURIComponent(newContent))),
         branch,
         ...(sha ? { sha } : {})
       })

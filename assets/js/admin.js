@@ -1,9 +1,5 @@
 /**
  * JAENUDIN SUWANDI — ADMIN DASHBOARD LOGIC (FIXED utk Vercel + local)
- * - initAdminData NETWORK-FIRST: selalu ambil data/content.json terbaru.
- * - saveAllChanges: POST /api/save-content (Node server.js LOKAL atau
- *   Vercel serverless function → commit ke GitHub). Kalau gagal/ belum
- *   dikonfigurasi → fallback localStorage.
  */
 
 let currentData = null;
@@ -11,25 +7,36 @@ let currentData = null;
 // =========================================================================
 // 1. Authentication Manager
 // =========================================================================
+
 function checkAuth() {
-  const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
   const overlay = document.getElementById('authOverlay');
-  if (overlay) {
-    overlay.style.display = isAuth ? 'none' : 'flex';
-  }
+  if (!overlay) return;
+
+  const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
+  overlay.style.display = isAuth ? 'none' : 'flex';
 }
 
 function handleLogin(e) {
-  e.preventDefault();
-  const user = document.getElementById('adminUser').value;
-  const pass = document.getElementById('adminPass').value;
+  if (e) e.preventDefault();
+
+  const userInput = document.getElementById('adminUser');
+  const passInput = document.getElementById('adminPass');
+  const errorElement = document.getElementById('authError');
+
+  if (!userInput || !passInput) return;
+
+  const user = userInput.value.trim();
+  const pass = passInput.value;
 
   if (user === 'admin' && pass === 'admin123') {
     sessionStorage.setItem('admin_logged_in', 'true');
+    if (errorElement) errorElement.textContent = '';
     checkAuth();
     showAdminToast('Login successful. Welcome Jaenudin!');
   } else {
-    document.getElementById('authError').textContent = 'Invalid credentials. Hint: admin / admin123';
+    if (errorElement) errorElement.textContent = 'Username atau password salah (admin / admin123).';
+    passInput.value = '';
+    passInput.focus();
   }
 }
 
@@ -91,27 +98,33 @@ function populateProfileTab() {
   const p = currentData.profile;
   if (!p) return;
 
-  document.getElementById('profileName').value = p.name || '';
-  document.getElementById('profileRolePrimary').value = p.rolePrimary || '';
-  document.getElementById('profileRoleSecondary').value = p.roleSecondary || '';
-  document.getElementById('profileEmail').value = p.email || '';
-  document.getElementById('profilePhone').value = p.phone || '';
-  document.getElementById('profileLocation').value = p.location || '';
-  document.getElementById('profileHeadline').value = p.heroHeadline || '';
-  document.getElementById('profileBio').value = p.heroBio || '';
-  document.getElementById('profileDiff').value = p.differentiator || '';
+  if (document.getElementById('profileName')) document.getElementById('profileName').value = p.name || '';
+  if (document.getElementById('profileRolePrimary')) document.getElementById('profileRolePrimary').value = p.rolePrimary || '';
+  if (document.getElementById('profileRoleSecondary')) document.getElementById('profileRoleSecondary').value = p.roleSecondary || '';
+  if (document.getElementById('profileEmail')) document.getElementById('profileEmail').value = p.email || '';
+  if (document.getElementById('profilePhone')) document.getElementById('profilePhone').value = p.phone || '';
+  if (document.getElementById('profileLocation')) document.getElementById('profileLocation').value = p.location || '';
+  if (document.getElementById('profileHeadline')) document.getElementById('profileHeadline').value = p.heroHeadline || '';
+  if (document.getElementById('profileBio')) document.getElementById('profileBio').value = p.heroBio || '';
+  if (document.getElementById('profileDiff')) document.getElementById('profileDiff').value = p.differentiator || '';
 }
 
 function populateProjectsTab() {
   const container = document.getElementById('projectsContainer');
-  if (!container) return;
+  if (!container || !currentData.projects) return;
   container.innerHTML = '';
 
   currentData.projects.forEach((proj, idx) => {
     const card = document.createElement('div');
     card.className = 'item-editor-card';
+    card.style.background = '#ffffff';
+    card.style.padding = '1.25rem';
+    card.style.borderRadius = '8px';
+    card.style.marginBottom = '1rem';
+    card.style.border = '1px solid #e2e8f0';
+
     card.innerHTML = `
-      <div class="item-editor-header">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
         <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a;">Project #${idx + 1}: ${proj.title}</h4>
         <button type="button" class="btn-admin btn-admin-danger" onclick="deleteProject(${idx})">Delete</button>
       </div>
@@ -156,14 +169,20 @@ function populateProjectsTab() {
 
 function populateExperienceTab() {
   const container = document.getElementById('experienceContainer');
-  if (!container) return;
+  if (!container || !currentData.experience) return;
   container.innerHTML = '';
 
   currentData.experience.forEach((exp, idx) => {
     const card = document.createElement('div');
     card.className = 'item-editor-card';
+    card.style.background = '#ffffff';
+    card.style.padding = '1.25rem';
+    card.style.borderRadius = '8px';
+    card.style.marginBottom = '1rem';
+    card.style.border = '1px solid #e2e8f0';
+
     card.innerHTML = `
-      <div class="item-editor-header">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
         <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a;">${exp.role} @ ${exp.company}</h4>
         <button type="button" class="btn-admin btn-admin-danger" onclick="deleteExperience(${idx})">Delete</button>
       </div>
@@ -197,12 +216,12 @@ function populateExperienceTab() {
 function populateSkillsTab() {
   const opsContainer = document.getElementById('opsSkillsContainer');
   const techContainer = document.getElementById('techSkillsContainer');
-  if (!opsContainer || !techContainer) return;
+  if (!opsContainer || !techContainer || !currentData.skills) return;
 
   opsContainer.innerHTML = '';
   techContainer.innerHTML = '';
 
-  currentData.skills.operations.forEach((sk, idx) => {
+  (currentData.skills.operations || []).forEach((sk, idx) => {
     const row = document.createElement('div');
     row.className = 'form-grid-2';
     row.style.marginBottom = '0.75rem';
@@ -217,7 +236,7 @@ function populateSkillsTab() {
     opsContainer.appendChild(row);
   });
 
-  currentData.skills.tech.forEach((sk, idx) => {
+  (currentData.skills.tech || []).forEach((sk, idx) => {
     const row = document.createElement('div');
     row.className = 'form-grid-2';
     row.style.marginBottom = '0.75rem';
@@ -235,12 +254,18 @@ function populateSkillsTab() {
 
 function populateAchievementsTab() {
   const container = document.getElementById('achievementsContainer');
-  if (!container) return;
+  if (!container || !currentData.achievements) return;
   container.innerHTML = '';
 
   currentData.achievements.forEach((ach, idx) => {
     const card = document.createElement('div');
     card.className = 'item-editor-card';
+    card.style.background = '#ffffff';
+    card.style.padding = '1.25rem';
+    card.style.borderRadius = '8px';
+    card.style.marginBottom = '1rem';
+    card.style.border = '1px solid #e2e8f0';
+
     card.innerHTML = `
       <div class="form-grid-3" style="margin-bottom: 1rem;">
         <div>
@@ -273,6 +298,7 @@ function populateAchievementsTab() {
 // 4. Add & Delete Actions
 // =========================================================================
 function addProject() {
+  if (!currentData.projects) currentData.projects = [];
   currentData.projects.push({
     id: 'proj-' + Date.now(),
     title: 'New Industrial Project',
@@ -295,6 +321,7 @@ function deleteProject(idx) {
 }
 
 function addExperience() {
+  if (!currentData.experience) currentData.experience = [];
   currentData.experience.unshift({
     id: 'exp-' + Date.now(),
     role: 'New Position',
@@ -317,33 +344,29 @@ function deleteExperience(idx) {
 }
 
 // =========================================================================
-// 5. Persistence — POST /api/save-content (lokal: server.js, Vercel: function)
+// 5. Persistence
 // =========================================================================
 async function saveAllChanges() {
   if (currentData.profile) {
-    currentData.profile.name = document.getElementById('profileName').value;
-    currentData.profile.rolePrimary = document.getElementById('profileRolePrimary').value;
-    currentData.profile.roleSecondary = document.getElementById('profileRoleSecondary').value;
-    currentData.profile.email = document.getElementById('profileEmail').value;
-    currentData.profile.phone = document.getElementById('profilePhone').value;
-    currentData.profile.location = document.getElementById('profileLocation').value;
-    currentData.profile.heroHeadline = document.getElementById('profileHeadline').value;
-    currentData.profile.heroBio = document.getElementById('profileBio').value;
-    currentData.profile.differentiator = document.getElementById('profileDiff').value;
+    if (document.getElementById('profileName')) currentData.profile.name = document.getElementById('profileName').value;
+    if (document.getElementById('profileRolePrimary')) currentData.profile.rolePrimary = document.getElementById('profileRolePrimary').value;
+    if (document.getElementById('profileRoleSecondary')) currentData.profile.roleSecondary = document.getElementById('profileRoleSecondary').value;
+    if (document.getElementById('profileEmail')) currentData.profile.email = document.getElementById('profileEmail').value;
+    if (document.getElementById('profilePhone')) currentData.profile.phone = document.getElementById('profilePhone').value;
+    if (document.getElementById('profileLocation')) currentData.profile.location = document.getElementById('profileLocation').value;
+    if (document.getElementById('profileHeadline')) currentData.profile.heroHeadline = document.getElementById('profileHeadline').value;
+    if (document.getElementById('profileBio')) currentData.profile.heroBio = document.getElementById('profileBio').value;
+    if (document.getElementById('profileDiff')) currentData.profile.differentiator = document.getElementById('profileDiff').value;
   }
-  
+
   if (!currentData.settings) currentData.settings = {};
   const logoInput = document.getElementById('settingLogoUrl');
   const bgInput = document.getElementById('settingBackgroundUrl');
   if (logoInput) currentData.settings.logoUrl = logoInput.value;
   if (bgInput) currentData.settings.backgroundUrl = bgInput.value;
 
-  // 1. Selalu sync localStorage (update instan di browser ini + picu event storage)
   localStorage.setItem('portfolio_content', JSON.stringify(currentData));
 
-  // 2. Coba simpan permanen via API
-  //    - Lokal (node server.js)  → tulis data/content.json di disk
-  //    - Vercel                  → serverless function commit ke GitHub → auto-deploy
   try {
     const res = await fetch('/api/save-content', {
       method: 'POST',
@@ -357,15 +380,10 @@ async function saveAllChanges() {
         showAdminToast(result.message || 'Changes saved & synced live!');
         return;
       }
-      if (result.fallback) {
-        showAdminToast('Tersimpan di browser ini saja. Setup GITHUB_* env vars di Vercel utk simpan permanen.');
-        return;
-      }
     }
-    throw new Error('Save API returned error');
+    throw new Error('Save API error');
   } catch (err) {
-    // Server mati / endpoint gak ada (mis. dibuka via Live Server)
-    showAdminToast('Tersimpan di browser (localStorage). Jalankan server.js / setup Vercel utk simpan permanen.');
+    showAdminToast('Tersimpan di browser (localStorage).');
   }
 }
 
@@ -387,7 +405,6 @@ function resetToDefault() {
   }
 }
 
-// Toast
 function showAdminToast(msg) {
   let toast = document.getElementById('adminToast');
   if (!toast) {
@@ -401,9 +418,7 @@ function showAdminToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// =========================================================================
 // Tab Navigation Controller
-// =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   initAdminData();

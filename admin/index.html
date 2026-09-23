@@ -6,36 +6,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — Jaenudin Suwandi Portfolio</title>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/admin.css">
 
   <style>
-    /* Styling khusus input form agar latar terang & teks terlihat jelas */
-    .admin-card input.form-control,
-    .admin-card textarea.form-control,
-    .item-editor-card input.form-control,
-    .item-editor-card textarea.form-control {
+    /* RESET KHUSUS ADMIN — Mencegah teks putih dari style.css utama */
+    body.admin-body {
+      background-color: #0f172a !important;
+      color: #0f172a !important;
+      background-image: none !important;
+    }
+
+    .admin-card {
       background-color: #ffffff !important;
       color: #0f172a !important;
       border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
     }
-    .admin-card label.form-label,
+
+    .admin-card-title,
+    .admin-card h2,
     .admin-card label,
-    .item-editor-card label {
-      color: #1e293b !important;
-      font-weight: 600 !important;
+    .admin-card .form-label,
+    .item-editor-card label,
+    .item-editor-card h4 {
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+
+    .form-control,
+    input.form-control,
+    textarea.form-control {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1 !important;
+      padding: 0.75rem 1rem !important;
+      border-radius: 8px !important;
+      font-size: 0.92rem !important;
+      font-family: inherit !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .form-control:focus,
+    input.form-control:focus,
+    textarea.form-control:focus {
+      background-color: #ffffff !important;
+      border-color: #0284c7 !important;
+      color: #0f172a !important;
+      outline: 2px solid #0284c7 !important;
+    }
+
+    /* RESPONSIVE LAYOUT ADMIN */
+    @media (max-width: 900px) {
+      body.admin-body {
+        flex-direction: column !important;
+      }
+
+      .admin-sidebar {
+        width: 100% !important;
+        padding: 1rem 1.5rem !important;
+        box-sizing: border-box !important;
+      }
+
+      .admin-brand {
+        margin-bottom: 1rem !important;
+      }
+
+      .admin-nav-list {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        padding-bottom: 0.5rem !important;
+      }
+
+      .admin-tab-btn {
+        white-space: nowrap !important;
+      }
+
+      .admin-content {
+        padding: 1.5rem 1rem !important;
+        max-width: 100% !important;
+      }
+
+      .form-grid-2,
+      .form-grid-3 {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
 
 <body class="admin-body">
 
-  <!-- Modal Auth Login -->
+  <!-- Modal Login / Lock Screen -->
   <div class="auth-overlay" id="authOverlay" style="display: flex;">
     <div class="auth-card">
       <div class="auth-lock-icon">
@@ -49,50 +117,50 @@
 
       <form id="authForm" onsubmit="directLogin(event)">
         <div style="text-align: left; margin-bottom: 1.25rem;">
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Username</label>
+          <label class="form-label" style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem;">Username</label>
           <input type="text" id="adminUser" class="form-control" placeholder="admin" required autofocus>
         </div>
 
         <div style="text-align: left; margin-bottom: 1.5rem;">
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Password</label>
+          <label class="form-label" style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem;">Password</label>
           <input type="password" id="adminPass" class="form-control" placeholder="••••••••" required>
           <div id="authError" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.4rem;"></div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%; justify-content: center; padding: 0.8rem;">
           <span>Unlock Dashboard</span>
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Sidebar Navigasi Admin -->
+  <!-- Sidebar Admin -->
   <aside class="admin-sidebar">
     <div class="admin-brand">
-      <div class="logo-monogram" style="width: 32px; height: 32px; font-size: 0.85rem;">JS</div>
+      <div class="logo-monogram" style="width: 36px; height: 36px; background: #0284c7; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; border-radius: 8px;">JS</div>
       <div>
-        <div style="font-weight: 700; font-size: 1rem;">Admin Portal</div>
+        <div style="font-weight: 700; font-size: 1rem; color: #fff;">Admin Portal</div>
         <div style="font-size: 0.72rem; color: #94a3b8;">Jaenudin Suwandi</div>
       </div>
     </div>
 
     <nav class="admin-nav-list">
-      <button type="button" class="admin-tab-btn active" data-tab="profile" onclick="switchTab('profile', this)">
+      <button type="button" class="admin-tab-btn active" onclick="switchTab('profile', this)">
         <span>Profile & Bio</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="projects" onclick="switchTab('projects', this)">
+      <button type="button" class="admin-tab-btn" onclick="switchTab('projects', this)">
         <span>Case Studies</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="experience" onclick="switchTab('experience', this)">
+      <button type="button" class="admin-tab-btn" onclick="switchTab('experience', this)">
         <span>Work History</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="skills" onclick="switchTab('skills', this)">
+      <button type="button" class="admin-tab-btn" onclick="switchTab('skills', this)">
         <span>Skills & Stack</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="achievements" onclick="switchTab('achievements', this)">
+      <button type="button" class="admin-tab-btn" onclick="switchTab('achievements', this)">
         <span>Achievements</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="settings" onclick="switchTab('settings', this)">
+      <button type="button" class="admin-tab-btn" onclick="switchTab('settings', this)">
         <span>Site Settings</span>
       </button>
     </nav>
@@ -107,13 +175,13 @@
     </div>
   </aside>
 
-  <!-- Main Work Area -->
+  <!-- Main Content Area -->
   <main class="admin-content">
 
     <div class="admin-header-row">
       <div>
-        <h1 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;">Content Management</h1>
-        <p style="color: var(--admin-text-muted); font-size: 0.92rem;">Edit content across all pages of your portfolio.</p>
+        <h1 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; color: #f8fafc;">Content Management</h1>
+        <p style="color: #94a3b8; font-size: 0.92rem;">Directly edit content across all pages of your portfolio.</p>
       </div>
 
       <div class="admin-actions-bar">
@@ -126,7 +194,7 @@
       </div>
     </div>
 
-    <!-- TAB 1: Profile & Bio -->
+    <!-- TAB 1: Profile -->
     <div class="admin-tab-section" id="profileSection" style="display: block;">
       <div class="admin-card">
         <h2 class="admin-card-title">Profile Identity & Contact Info</h2>
@@ -168,16 +236,21 @@
 
         <div style="margin-bottom: 1.25rem;">
           <label class="form-label">Hero Bio</label>
-          <textarea id="profileBio" class="form-control" rows="3"></textarea>
+          <textarea id="profileBio" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div>
+          <label class="form-label">Key Differentiator / Value Proposition</label>
+          <textarea id="profileDiff" class="form-control" rows="3"></textarea>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: Case Studies -->
+    <!-- TAB 2: Projects -->
     <div class="admin-tab-section" id="projectsSection" style="display: none;">
       <div class="admin-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <h2 class="admin-card-title">Case Studies & Projects</h2>
+          <h2 class="admin-card-title" style="margin: 0; border: none;">Case Studies & Projects</h2>
           <button type="button" class="btn-admin btn-admin-primary" onclick="addProject()">+ Add New Project</button>
         </div>
         <div id="projectsContainer"></div>
@@ -188,14 +261,14 @@
     <div class="admin-tab-section" id="experienceSection" style="display: none;">
       <div class="admin-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <h2 class="admin-card-title">Work Experience & Timeline</h2>
+          <h2 class="admin-card-title" style="margin: 0; border: none;">Work Experience & Timeline</h2>
           <button type="button" class="btn-admin btn-admin-primary" onclick="addExperience()">+ Add Experience</button>
         </div>
         <div id="experienceContainer"></div>
       </div>
     </div>
 
-    <!-- TAB 4: Skills & Stack -->
+    <!-- TAB 4: Skills -->
     <div class="admin-tab-section" id="skillsSection" style="display: none;">
       <div class="admin-card">
         <h2 class="admin-card-title">Operations & Tech Skills</h2>
@@ -212,34 +285,34 @@
       </div>
     </div>
 
-    <!-- TAB 6: Site Settings -->
+    <!-- TAB 6: Settings -->
     <div class="admin-tab-section" id="settingsSection" style="display: none;">
       <div class="admin-card">
         <h2 class="admin-card-title">Branding & Background Settings</h2>
         <div style="margin-bottom: 1.25rem;">
           <label class="form-label">Custom Logo URL</label>
-          <input type="text" id="settingLogoUrl" class="form-control">
+          <input type="text" id="settingLogoUrl" class="form-control" placeholder="assets/img/monogram_logo.svg">
         </div>
         <div>
           <label class="form-label">Custom Background Image URL</label>
-          <input type="text" id="settingBackgroundUrl" class="form-control">
+          <input type="text" id="settingBackgroundUrl" class="form-control" placeholder="https://example.com/bg.jpg">
         </div>
       </div>
     </div>
 
   </main>
 
-  <!-- Script Admin (Logika Auth, Navigasi Tab, & Pemicu Data) -->
   <script src="../js/admin.js"></script>
+
   <script>
     function checkDirectAuth() {
       const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
       const overlay = document.getElementById('authOverlay');
       if (overlay) overlay.style.display = isAuth ? 'none' : 'flex';
-      
-      // Panggil pemicu isi data jika sudah terautentikasi
-      if (isAuth && typeof initAdminData === 'function') {
-        initAdminData();
+
+      // Load data jika user sudah login
+      if (isAuth) {
+        loadContentData();
       }
     }
 
@@ -272,6 +345,13 @@
       if (targetSec) targetSec.style.display = 'block';
 
       if (element) element.classList.add('active');
+    }
+
+    // Pemicu Fetch Data yang Aman
+    async function loadContentData() {
+      if (typeof initAdminData === 'function') {
+        await initAdminData();
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {

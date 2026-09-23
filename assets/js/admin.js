@@ -1,24 +1,19 @@
 /**
- * JAENUDIN SUWANDI — ADMIN DASHBOARD LOGIC (FIXED utk Vercel + local)
+ * JAENUDIN SUWANDI — ADMIN DASHBOARD LOGIC (FIXED DATA FETCHING)
  */
 
 let currentData = null;
 
-// =========================================================================
-// 1. Authentication Manager
-// =========================================================================
-
+// 1. Auth Management
 function checkAuth() {
   const overlay = document.getElementById('authOverlay');
   if (!overlay) return;
-
   const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
   overlay.style.display = isAuth ? 'none' : 'flex';
 }
 
 function handleLogin(e) {
   if (e) e.preventDefault();
-
   const userInput = document.getElementById('adminUser');
   const passInput = document.getElementById('adminPass');
   const errorElement = document.getElementById('authError');
@@ -32,9 +27,9 @@ function handleLogin(e) {
     sessionStorage.setItem('admin_logged_in', 'true');
     if (errorElement) errorElement.textContent = '';
     checkAuth();
-    showAdminToast('Login successful. Welcome Jaenudin!');
+    initAdminData();
   } else {
-    if (errorElement) errorElement.textContent = 'Username atau password salah (admin / admin123).';
+    if (errorElement) errorElement.textContent = 'Username atau password salah! (admin / admin123)';
     passInput.value = '';
     passInput.focus();
   }
@@ -45,19 +40,18 @@ function handleLogout() {
   checkAuth();
 }
 
-// =========================================================================
-// 2. Data Initialization — NETWORK FIRST
-// =========================================================================
+// 2. Data Initialization — ABSOLUTE PATH FIX
 async function initAdminData() {
   try {
-    const res = await fetch('../data/content.json?t=' + Date.now(), { cache: 'no-store' });
+    // Memakai Absolute Path /data/content.json agar selalu tepat di Vercel & Lokal
+    const res = await fetch('/data/content.json?t=' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
       currentData = await res.json();
     } else {
       throw new Error('HTTP ' + res.status);
     }
   } catch (err) {
-    console.warn('[Admin] Server tidak reachable, pakai cache localStorage.', err);
+    console.warn('[Admin] Server fetch gagal, mencoba localStorage cache...', err);
     const cached = localStorage.getItem('portfolio_content');
     if (cached) {
       try { currentData = JSON.parse(cached); } catch (e) { currentData = null; }
@@ -65,7 +59,7 @@ async function initAdminData() {
   }
 
   if (!currentData) {
-    showAdminToast('Could not load content data. Pastikan data/content.json ada.');
+    console.error('[Admin] Gagal memuat data dari content.json.');
     return;
   }
 
@@ -73,9 +67,7 @@ async function initAdminData() {
   populateAllTabs();
 }
 
-// =========================================================================
-// 3. Tab Populators & Form Bindings
-// =========================================================================
+// 3. Tab Populators
 function populateAllTabs() {
   if (!currentData) return;
   populateProfileTab();
@@ -84,14 +76,6 @@ function populateAllTabs() {
   populateSkillsTab();
   populateAchievementsTab();
   populateSettingsTab();
-}
-
-function populateSettingsTab() {
-  const s = currentData.settings || {};
-  const logoInput = document.getElementById('settingLogoUrl');
-  const bgInput = document.getElementById('settingBackgroundUrl');
-  if (logoInput) logoInput.value = s.logoUrl || '';
-  if (bgInput) bgInput.value = s.backgroundUrl || '';
 }
 
 function populateProfileTab() {
@@ -121,45 +105,35 @@ function populateProjectsTab() {
     card.style.padding = '1.25rem';
     card.style.borderRadius = '8px';
     card.style.marginBottom = '1rem';
-    card.style.border = '1px solid #e2e8f0';
+    card.style.border = '1px solid #cbd5e1';
 
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a;">Project #${idx + 1}: ${proj.title}</h4>
+        <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a; margin: 0;">Project #${idx + 1}: ${proj.title}</h4>
         <button type="button" class="btn-admin btn-admin-danger" onclick="deleteProject(${idx})">Delete</button>
       </div>
       <div class="form-grid-2" style="margin-bottom: 1rem;">
         <div>
           <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Project Title</label>
-          <input type="text" class="form-control" value="${proj.title}" onchange="currentData.projects[${idx}].title = this.value">
+          <input type="text" class="form-control" value="${proj.title || ''}" onchange="currentData.projects[${idx}].title = this.value">
         </div>
         <div>
           <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Category / Badge</label>
-          <input type="text" class="form-control" value="${proj.category}" onchange="currentData.projects[${idx}].category = this.value">
+          <input type="text" class="form-control" value="${proj.category || ''}" onchange="currentData.projects[${idx}].category = this.value">
         </div>
       </div>
       <div style="margin-bottom: 1rem;">
         <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Summary</label>
-        <input type="text" class="form-control" value="${proj.summary}" onchange="currentData.projects[${idx}].summary = this.value">
+        <input type="text" class="form-control" value="${proj.summary || ''}" onchange="currentData.projects[${idx}].summary = this.value">
       </div>
-      <div class="form-grid-2" style="margin-bottom: 1rem;">
+      <div class="form-grid-2">
         <div>
           <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Business Challenge</label>
           <textarea class="form-control" rows="3" onchange="currentData.projects[${idx}].challenge = this.value">${proj.challenge || ''}</textarea>
         </div>
         <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Technical Solution & Impact</label>
+          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Technical Solution</label>
           <textarea class="form-control" rows="3" onchange="currentData.projects[${idx}].solution = this.value">${proj.solution || ''}</textarea>
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Key Metrics</label>
-          <input type="text" class="form-control" value="${proj.metrics || ''}" onchange="currentData.projects[${idx}].metrics = this.value">
-        </div>
-        <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Tech Stack (Comma Separated)</label>
-          <input type="text" class="form-control" value="${(proj.techStack || []).join(', ')}" onchange="currentData.projects[${idx}].techStack = this.value.split(',').map(s=>s.trim())">
         </div>
       </div>
     `;
@@ -179,25 +153,25 @@ function populateExperienceTab() {
     card.style.padding = '1.25rem';
     card.style.borderRadius = '8px';
     card.style.marginBottom = '1rem';
-    card.style.border = '1px solid #e2e8f0';
+    card.style.border = '1px solid #cbd5e1';
 
     card.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a;">${exp.role} @ ${exp.company}</h4>
+        <h4 style="font-family: 'Outfit'; font-size: 1.1rem; color: #0f172a; margin:0;">${exp.role} @ ${exp.company}</h4>
         <button type="button" class="btn-admin btn-admin-danger" onclick="deleteExperience(${idx})">Delete</button>
       </div>
       <div class="form-grid-3" style="margin-bottom: 1rem;">
         <div>
           <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Job Role</label>
-          <input type="text" class="form-control" value="${exp.role}" onchange="currentData.experience[${idx}].role = this.value">
+          <input type="text" class="form-control" value="${exp.role || ''}" onchange="currentData.experience[${idx}].role = this.value">
         </div>
         <div>
           <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Company Name</label>
-          <input type="text" class="form-control" value="${exp.company}" onchange="currentData.experience[${idx}].company = this.value">
+          <input type="text" class="form-control" value="${exp.company || ''}" onchange="currentData.experience[${idx}].company = this.value">
         </div>
         <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Period / Date Range</label>
-          <input type="text" class="form-control" value="${exp.period}" onchange="currentData.experience[${idx}].period = this.value">
+          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Period</label>
+          <input type="text" class="form-control" value="${exp.period || ''}" onchange="currentData.experience[${idx}].period = this.value">
         </div>
       </div>
       <div style="margin-bottom: 1rem;">
@@ -205,8 +179,8 @@ function populateExperienceTab() {
         <textarea class="form-control" rows="2" onchange="currentData.experience[${idx}].description = this.value">${exp.description || ''}</textarea>
       </div>
       <div>
-        <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Key Accomplishments (One per line)</label>
-        <textarea class="form-control" rows="4" onchange="currentData.experience[${idx}].bulletPoints = this.value.split('\\n').filter(s=>s.trim())">${(exp.bulletPoints || []).join('\n')}</textarea>
+        <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Key Accomplishments (1 per baris)</label>
+        <textarea class="form-control" rows="3" onchange="currentData.experience[${idx}].bulletPoints = this.value.split('\\n').filter(s=>s.trim())">${(exp.bulletPoints || []).join('\n')}</textarea>
       </div>
     `;
     container.appendChild(card);
@@ -218,8 +192,8 @@ function populateSkillsTab() {
   const techContainer = document.getElementById('techSkillsContainer');
   if (!opsContainer || !techContainer || !currentData.skills) return;
 
-  opsContainer.innerHTML = '';
-  techContainer.innerHTML = '';
+  opsContainer.innerHTML = '<h3 style="color:#0f172a; margin-bottom:0.75rem;">Operations Skills</h3>';
+  techContainer.innerHTML = '<h3 style="color:#0f172a; margin-bottom:0.75rem;">Tech Skills</h3>';
 
   (currentData.skills.operations || []).forEach((sk, idx) => {
     const row = document.createElement('div');
@@ -227,11 +201,7 @@ function populateSkillsTab() {
     row.style.marginBottom = '0.75rem';
     row.innerHTML = `
       <input type="text" class="form-control" value="${sk.name}" onchange="currentData.skills.operations[${idx}].name = this.value">
-      <div style="display:flex; gap:0.5rem; align-items:center;">
-        <input type="number" min="0" max="100" class="form-control" style="width: 80px;" value="${sk.level}" onchange="currentData.skills.operations[${idx}].level = +this.value">
-        <span>%</span>
-        <input type="text" class="form-control" value="${sk.badge || ''}" placeholder="Badge" onchange="currentData.skills.operations[${idx}].badge = this.value">
-      </div>
+      <input type="number" min="0" max="100" class="form-control" value="${sk.level}" onchange="currentData.skills.operations[${idx}].level = +this.value">
     `;
     opsContainer.appendChild(row);
   });
@@ -242,11 +212,7 @@ function populateSkillsTab() {
     row.style.marginBottom = '0.75rem';
     row.innerHTML = `
       <input type="text" class="form-control" value="${sk.name}" onchange="currentData.skills.tech[${idx}].name = this.value">
-      <div style="display:flex; gap:0.5rem; align-items:center;">
-        <input type="number" min="0" max="100" class="form-control" style="width: 80px;" value="${sk.level}" onchange="currentData.skills.tech[${idx}].level = +this.value">
-        <span>%</span>
-        <input type="text" class="form-control" value="${sk.badge || ''}" placeholder="Badge" onchange="currentData.skills.tech[${idx}].badge = this.value">
-      </div>
+      <input type="number" min="0" max="100" class="form-control" value="${sk.level}" onchange="currentData.skills.tech[${idx}].level = +this.value">
     `;
     techContainer.appendChild(row);
   });
@@ -264,57 +230,50 @@ function populateAchievementsTab() {
     card.style.padding = '1.25rem';
     card.style.borderRadius = '8px';
     card.style.marginBottom = '1rem';
-    card.style.border = '1px solid #e2e8f0';
+    card.style.border = '1px solid #cbd5e1';
 
     card.innerHTML = `
       <div class="form-grid-3" style="margin-bottom: 1rem;">
         <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Achievement Title</label>
-          <input type="text" class="form-control" value="${ach.title}" onchange="currentData.achievements[${idx}].title = this.value">
+          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Title</label>
+          <input type="text" class="form-control" value="${ach.title || ''}" onchange="currentData.achievements[${idx}].title = this.value">
         </div>
         <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Organization / Company</label>
-          <input type="text" class="form-control" value="${ach.organization}" onchange="currentData.achievements[${idx}].organization = this.value">
+          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Organization</label>
+          <input type="text" class="form-control" value="${ach.organization || ''}" onchange="currentData.achievements[${idx}].organization = this.value">
         </div>
         <div>
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Date / Month</label>
-          <input type="text" class="form-control" value="${ach.date}" onchange="currentData.achievements[${idx}].date = this.value">
+          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Date</label>
+          <input type="text" class="form-control" value="${ach.date || ''}" onchange="currentData.achievements[${idx}].date = this.value">
         </div>
-      </div>
-      <div style="margin-bottom: 1rem;">
-        <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Financial or Operational Value</label>
-        <input type="text" class="form-control" value="${ach.value || ''}" onchange="currentData.achievements[${idx}].value = this.value">
-      </div>
-      <div>
-        <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Description Details</label>
-        <textarea class="form-control" rows="3" onchange="currentData.achievements[${idx}].description = this.value">${ach.description || ''}</textarea>
       </div>
     `;
     container.appendChild(card);
   });
 }
 
-// =========================================================================
-// 4. Add & Delete Actions
-// =========================================================================
+function populateSettingsTab() {
+  const s = currentData.settings || {};
+  if (document.getElementById('settingLogoUrl')) document.getElementById('settingLogoUrl').value = s.logoUrl || '';
+  if (document.getElementById('settingBackgroundUrl')) document.getElementById('settingBackgroundUrl').value = s.backgroundUrl || '';
+}
+
+// 4. Actions
 function addProject() {
   if (!currentData.projects) currentData.projects = [];
   currentData.projects.push({
     id: 'proj-' + Date.now(),
     title: 'New Industrial Project',
     category: 'Full-Stack Web App',
-    summary: 'Brief project summary...',
-    challenge: 'Key problem faced...',
-    solution: 'Architecture solution implemented...',
-    metrics: 'Measurable ROI outcome',
-    techStack: ['Laravel', 'MySQL']
+    summary: 'Project summary...',
+    challenge: 'Key problem...',
+    solution: 'Solution...'
   });
   populateProjectsTab();
-  showAdminToast('New project draft added. Click Save when done.');
 }
 
 function deleteProject(idx) {
-  if (confirm('Delete this project?')) {
+  if (confirm('Hapus project ini?')) {
     currentData.projects.splice(idx, 1);
     populateProjectsTab();
   }
@@ -327,25 +286,19 @@ function addExperience() {
     role: 'New Position',
     company: 'Company Name',
     period: '2026 — Present',
-    current: true,
-    description: 'Overview of duties...',
-    bulletPoints: ['Key achievement 1', 'Key achievement 2'],
-    tags: ['Operations', 'Planning']
+    description: 'Duties...',
+    bulletPoints: ['Key achievement 1']
   });
   populateExperienceTab();
-  showAdminToast('New role draft added. Click Save when done.');
 }
 
 function deleteExperience(idx) {
-  if (confirm('Delete this experience entry?')) {
+  if (confirm('Hapus pengalaman ini?')) {
     currentData.experience.splice(idx, 1);
     populateExperienceTab();
   }
 }
 
-// =========================================================================
-// 5. Persistence
-// =========================================================================
 async function saveAllChanges() {
   if (currentData.profile) {
     if (document.getElementById('profileName')) currentData.profile.name = document.getElementById('profileName').value;
@@ -359,12 +312,6 @@ async function saveAllChanges() {
     if (document.getElementById('profileDiff')) currentData.profile.differentiator = document.getElementById('profileDiff').value;
   }
 
-  if (!currentData.settings) currentData.settings = {};
-  const logoInput = document.getElementById('settingLogoUrl');
-  const bgInput = document.getElementById('settingBackgroundUrl');
-  if (logoInput) currentData.settings.logoUrl = logoInput.value;
-  if (bgInput) currentData.settings.backgroundUrl = bgInput.value;
-
   localStorage.setItem('portfolio_content', JSON.stringify(currentData));
 
   try {
@@ -373,17 +320,12 @@ async function saveAllChanges() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(currentData)
     });
-
     if (res.ok) {
-      const result = await res.json();
-      if (result.success) {
-        showAdminToast(result.message || 'Changes saved & synced live!');
-        return;
-      }
+      alert('Data berhasil disimpan dan disinkronkan!');
+      return;
     }
-    throw new Error('Save API error');
   } catch (err) {
-    showAdminToast('Tersimpan di browser (localStorage).');
+    alert('Tersimpan di browser (localStorage).');
   }
 }
 
@@ -395,48 +337,4 @@ function exportJSON() {
   document.body.appendChild(downloadAnchor);
   downloadAnchor.click();
   downloadAnchor.remove();
-  showAdminToast('content.json downloaded successfully!');
 }
-
-function resetToDefault() {
-  if (confirm('Reset to original file content? Any unsaved edits will be discarded.')) {
-    localStorage.removeItem('portfolio_content');
-    location.reload();
-  }
-}
-
-function showAdminToast(msg) {
-  let toast = document.getElementById('adminToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'adminToast';
-    toast.className = 'admin-toast';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 4000);
-}
-
-// Tab Navigation Controller
-document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
-  initAdminData();
-
-  const tabBtns = document.querySelectorAll('.admin-tab-btn');
-  const tabSections = document.querySelectorAll('.admin-tab-section');
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-tab');
-      tabBtns.forEach(b => b.classList.remove('active'));
-      tabSections.forEach(s => s.style.display = 'none');
-
-      btn.classList.add('active');
-      const targetSec = document.getElementById(target + 'Section');
-      if (targetSec) targetSec.style.display = 'block';
-    });
-  });
-
-  document.getElementById('authForm')?.addEventListener('submit', handleLogin);
-});

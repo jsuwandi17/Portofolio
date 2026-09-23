@@ -6,34 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — Jaenudin Suwandi Portfolio</title>
 
-  <!-- Google Fonts: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/admin.css">
 
   <style>
-    /* Fix Warna Input Form & Textarea di Admin Dashboard */
+    /* Styling khusus input form biar terang & tulisannya kelihatan jelas */
     .admin-card input.form-control,
     .admin-card textarea.form-control,
     .item-editor-card input.form-control,
     .item-editor-card textarea.form-control {
-      background-color: #f8fafc !important;
+      background-color: #ffffff !important;
       color: #0f172a !important;
       border: 1px solid #cbd5e1 !important;
-    }
-    .admin-card input.form-control:focus,
-    .admin-card textarea.form-control:focus,
-    .item-editor-card input.form-control:focus,
-    .item-editor-card textarea.form-control:focus {
-      background-color: #ffffff !important;
-      border-color: #0284c7 !important;
-      color: #0f172a !important;
-      outline: none !important;
     }
     .admin-card label.form-label,
     .admin-card label,
@@ -46,8 +35,8 @@
 
 <body class="admin-body">
 
-  <!-- Authentication Gate (Lock Screen Modal) -->
-  <div class="auth-overlay" id="authOverlay">
+  <!-- Modal Auth Login -->
+  <div class="auth-overlay" id="authOverlay" style="display: flex;">
     <div class="auth-card">
       <div class="auth-lock-icon">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,9 +45,9 @@
         </svg>
       </div>
       <h2 class="auth-title">Admin Management Portal</h2>
-      <p class="auth-desc">Please log in to manage your portfolio, case studies, and career data.</p>
+      <p class="auth-desc">Please log in to manage your portfolio data.</p>
 
-      <form id="authForm" onsubmit="handleLogin(event)">
+      <form id="authForm" onsubmit="directLogin(event)">
         <div style="text-align: left; margin-bottom: 1.25rem;">
           <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Username</label>
           <input type="text" id="adminUser" class="form-control" placeholder="admin" required autofocus>
@@ -77,7 +66,7 @@
     </div>
   </div>
 
-  <!-- Admin Sidebar -->
+  <!-- Sidebar Navigasi Admin -->
   <aside class="admin-sidebar">
     <div class="admin-brand">
       <div class="logo-monogram" style="width: 32px; height: 32px; font-size: 0.85rem;">JS</div>
@@ -89,100 +78,50 @@
 
     <nav class="admin-nav-list">
       <button type="button" class="admin-tab-btn active" data-tab="profile">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
         <span>Profile & Bio</span>
       </button>
-
       <button type="button" class="admin-tab-btn" data-tab="projects">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
         <span>Case Studies</span>
       </button>
-
       <button type="button" class="admin-tab-btn" data-tab="experience">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-        </svg>
         <span>Work History</span>
       </button>
-
       <button type="button" class="admin-tab-btn" data-tab="skills">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-        </svg>
         <span>Skills & Stack</span>
       </button>
-
       <button type="button" class="admin-tab-btn" data-tab="achievements">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="8" r="7" />
-          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-        </svg>
         <span>Achievements</span>
       </button>
-
       <button type="button" class="admin-tab-btn" data-tab="settings">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
         <span>Site Settings</span>
       </button>
     </nav>
 
     <div class="admin-sidebar-footer">
-      <a href="../index.html" target="_blank" class="btn-admin btn-admin-secondary"
-        style="text-align: center; justify-content: center;">
+      <a href="../index.html" target="_blank" class="btn-admin btn-admin-secondary" style="text-align: center; justify-content: center;">
         <span>View Live Site ↗</span>
       </a>
-      <button type="button" class="btn-admin btn-admin-danger" onclick="handleLogout()"
-        style="text-align: center; justify-content: center;">
+      <button type="button" class="btn-admin btn-admin-danger" onclick="directLogout()" style="text-align: center; justify-content: center;">
         <span>Log Out</span>
       </button>
     </div>
   </aside>
 
-  <!-- Admin Main Working Area -->
+  <!-- Main Work Area -->
   <main class="admin-content">
 
-    <!-- Top Action Bar -->
     <div class="admin-header-row">
       <div>
-        <h1 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;">
-          Content Management</h1>
-        <p style="color: var(--admin-text-muted); font-size: 0.92rem;">Directly edit content across all pages of your portfolio.</p>
+        <h1 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;">Content Management</h1>
+        <p style="color: var(--admin-text-muted); font-size: 0.92rem;">Edit content across all pages of your portfolio.</p>
       </div>
 
       <div class="admin-actions-bar">
         <button type="button" class="btn-admin btn-admin-success" onclick="saveAllChanges()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-            <polyline points="17 21 17 13 7 13 7 21" />
-            <polyline points="7 3 7 8 15 8" />
-          </svg>
           <span>Save Changes</span>
         </button>
-
-        <button type="button" class="btn-admin btn-admin-primary" onclick="exportJSON()"
-          title="Download backup of data/content.json">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
+        <button type="button" class="btn-admin btn-admin-primary" onclick="exportJSON()">
           <span>Download JSON</span>
-        </button>
-
-        <button type="button" class="btn-admin btn-admin-secondary" onclick="resetToDefault()"
-          title="Reset to original content">
-          <span>Reset</span>
         </button>
       </div>
     </div>
@@ -198,11 +137,11 @@
             <input type="text" id="profileName" class="form-control">
           </div>
           <div>
-            <label class="form-label">Primary Role (Operations)</label>
+            <label class="form-label">Primary Role</label>
             <input type="text" id="profileRolePrimary" class="form-control">
           </div>
           <div>
-            <label class="form-label">Secondary Role (Tech)</label>
+            <label class="form-label">Secondary Role</label>
             <input type="text" id="profileRoleSecondary" class="form-control">
           </div>
         </div>
@@ -228,82 +167,67 @@
         </div>
 
         <div style="margin-bottom: 1.25rem;">
-          <label class="form-label">Hero Bio (Conversational intro)</label>
+          <label class="form-label">Hero Bio</label>
           <textarea id="profileBio" class="form-control" rows="3"></textarea>
         </div>
-
-        <div>
-          <label class="form-label">Key Differentiator / Value Proposition</label>
-          <textarea id="profileDiff" class="form-control" rows="3"></textarea>
-        </div>
       </div>
     </div>
 
-    <!-- TAB 2: Portfolio Projects -->
+    <!-- TAB REST -->
     <div class="admin-tab-section" id="projectsSection" style="display: none;">
-      <div class="admin-card">
-        <div class="admin-card-title">
-          <span>Case Studies & Projects</span>
-          <button type="button" class="btn-admin btn-admin-primary" onclick="addProject()">+ Add New Project</button>
-        </div>
-        <div id="projectsContainer"></div>
-      </div>
+      <div class="admin-card"><div id="projectsContainer"></div></div>
     </div>
-
-    <!-- TAB 3: Work Experience -->
     <div class="admin-tab-section" id="experienceSection" style="display: none;">
-      <div class="admin-card">
-        <div class="admin-card-title">
-          <span>Career Journey & Timeline</span>
-          <button type="button" class="btn-admin btn-admin-primary" onclick="addExperience()">+ Add Experience</button>
-        </div>
-        <div id="experienceContainer"></div>
-      </div>
+      <div class="admin-card"><div id="experienceContainer"></div></div>
     </div>
-
-    <!-- TAB 4: Skills & Competencies -->
     <div class="admin-tab-section" id="skillsSection" style="display: none;">
-      <div class="admin-card">
-        <h2 class="admin-card-title">Operations & ERP Skills</h2>
-        <div id="opsSkillsContainer"></div>
-      </div>
-
-      <div class="admin-card">
-        <h2 class="admin-card-title">Tech & Full-Stack Development Stack</h2>
-        <div id="techSkillsContainer"></div>
-      </div>
+      <div class="admin-card"><div id="opsSkillsContainer"></div><div id="techSkillsContainer"></div></div>
     </div>
-
-    <!-- TAB 5: Achievements -->
     <div class="admin-tab-section" id="achievementsSection" style="display: none;">
-      <div class="admin-card">
-        <h2 class="admin-card-title">Awards & Milestones</h2>
-        <div id="achievementsContainer"></div>
-      </div>
+      <div class="admin-card"><div id="achievementsContainer"></div></div>
     </div>
-
-    <!-- TAB 6: Settings -->
     <div class="admin-tab-section" id="settingsSection" style="display: none;">
       <div class="admin-card">
-        <h2 class="admin-card-title">Branding & Visuals</h2>
-
-        <div style="margin-bottom: 1.25rem;">
-          <label class="form-label">Custom Logo URL (SVG, PNG, JPG)</label>
-          <input type="text" id="settingLogoUrl" class="form-control" placeholder="assets/img/monogram_logo.svg">
-          <small style="color: var(--admin-text-muted); display: block; margin-top: 0.25rem;">Leave empty to use the default Jaenudin Suwandi monogram.</small>
-        </div>
-
-        <div style="margin-bottom: 1.25rem;">
-          <label class="form-label">Custom Background Image URL</label>
-          <input type="text" id="settingBackgroundUrl" class="form-control" placeholder="https://example.com/bg.jpg">
-          <small style="color: var(--admin-text-muted); display: block; margin-top: 0.25rem;">Leave empty to use the sleek dark mode default background.</small>
-        </div>
+        <label class="form-label">Custom Logo URL</label>
+        <input type="text" id="settingLogoUrl" class="form-control">
+        <label class="form-label" style="margin-top:1rem; display:block;">Custom Background URL</label>
+        <input type="text" id="settingBackgroundUrl" class="form-control">
       </div>
     </div>
 
   </main>
 
- <script src="../assets/js/app.js"></script>
+  <!-- SCRIPT LOGIK LANGSUNG DI FILE INI (BEBAS LAG & CACHE ERROR) -->
+  <script>
+    function checkDirectAuth() {
+      const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
+      const overlay = document.getElementById('authOverlay');
+      if (overlay) overlay.style.display = isAuth ? 'none' : 'flex';
+    }
+
+    function directLogin(e) {
+      if (e) e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value;
+
+      if (u === 'admin' && p === 'admin123') {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        checkDirectAuth();
+      } else {
+        document.getElementById('authError').textContent = 'Username atau password salah! Gunakan admin / admin123';
+      }
+    }
+
+    function directLogout() {
+      sessionStorage.removeItem('admin_logged_in');
+      checkDirectAuth();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkDirectAuth();
+    });
+  </script>
+  <script src="../js/admin.js"></script>
 </body>
 
 </html>

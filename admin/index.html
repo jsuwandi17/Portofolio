@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
 
   <style>
-    /* Styling khusus input form biar terang & tulisannya kelihatan jelas */
+    /* Styling khusus input form agar latar terang & teks terlihat jelas */
     .admin-card input.form-control,
     .admin-card textarea.form-control,
     .item-editor-card input.form-control,
@@ -229,12 +229,18 @@
 
   </main>
 
-  <!-- Skrip Navigasi & Auth Terintegrasi -->
+  <!-- Script Admin (Logika Auth, Navigasi Tab, & Pemicu Data) -->
+  <script src="../js/admin.js"></script>
   <script>
     function checkDirectAuth() {
       const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
       const overlay = document.getElementById('authOverlay');
       if (overlay) overlay.style.display = isAuth ? 'none' : 'flex';
+      
+      // Panggil pemicu isi data jika sudah terautentikasi
+      if (isAuth && typeof initAdminData === 'function') {
+        initAdminData();
+      }
     }
 
     function directLogin(e) {
@@ -255,7 +261,6 @@
       checkDirectAuth();
     }
 
-    // Fungsi Perpindahan Tab Sidebar
     function switchTab(tabName, element) {
       const allSections = document.querySelectorAll('.admin-tab-section');
       allSections.forEach(sec => sec.style.display = 'none');
@@ -273,7 +278,6 @@
       checkDirectAuth();
     });
   </script>
-  <script src="../js/admin.js"></script>
 </body>
 
 </html>

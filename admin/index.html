@@ -77,22 +77,22 @@
     </div>
 
     <nav class="admin-nav-list">
-      <button type="button" class="admin-tab-btn active" data-tab="profile">
+      <button type="button" class="admin-tab-btn active" data-tab="profile" onclick="switchTab('profile', this)">
         <span>Profile & Bio</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="projects">
+      <button type="button" class="admin-tab-btn" data-tab="projects" onclick="switchTab('projects', this)">
         <span>Case Studies</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="experience">
+      <button type="button" class="admin-tab-btn" data-tab="experience" onclick="switchTab('experience', this)">
         <span>Work History</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="skills">
+      <button type="button" class="admin-tab-btn" data-tab="skills" onclick="switchTab('skills', this)">
         <span>Skills & Stack</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="achievements">
+      <button type="button" class="admin-tab-btn" data-tab="achievements" onclick="switchTab('achievements', this)">
         <span>Achievements</span>
       </button>
-      <button type="button" class="admin-tab-btn" data-tab="settings">
+      <button type="button" class="admin-tab-btn" data-tab="settings" onclick="switchTab('settings', this)">
         <span>Site Settings</span>
       </button>
     </nav>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- TAB 1: Profile & Bio -->
-    <div class="admin-tab-section" id="profileSection">
+    <div class="admin-tab-section" id="profileSection" style="display: block;">
       <div class="admin-card">
         <h2 class="admin-card-title">Profile Identity & Contact Info</h2>
 
@@ -173,31 +173,63 @@
       </div>
     </div>
 
-    <!-- TAB REST -->
+    <!-- TAB 2: Case Studies -->
     <div class="admin-tab-section" id="projectsSection" style="display: none;">
-      <div class="admin-card"><div id="projectsContainer"></div></div>
+      <div class="admin-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2 class="admin-card-title">Case Studies & Projects</h2>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="addProject()">+ Add New Project</button>
+        </div>
+        <div id="projectsContainer"></div>
+      </div>
     </div>
+
+    <!-- TAB 3: Work History -->
     <div class="admin-tab-section" id="experienceSection" style="display: none;">
-      <div class="admin-card"><div id="experienceContainer"></div></div>
+      <div class="admin-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2 class="admin-card-title">Work Experience & Timeline</h2>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="addExperience()">+ Add Experience</button>
+        </div>
+        <div id="experienceContainer"></div>
+      </div>
     </div>
+
+    <!-- TAB 4: Skills & Stack -->
     <div class="admin-tab-section" id="skillsSection" style="display: none;">
-      <div class="admin-card"><div id="opsSkillsContainer"></div><div id="techSkillsContainer"></div></div>
+      <div class="admin-card">
+        <h2 class="admin-card-title">Operations & Tech Skills</h2>
+        <div id="opsSkillsContainer"></div>
+        <div id="techSkillsContainer" style="margin-top: 1.5rem;"></div>
+      </div>
     </div>
+
+    <!-- TAB 5: Achievements -->
     <div class="admin-tab-section" id="achievementsSection" style="display: none;">
-      <div class="admin-card"><div id="achievementsContainer"></div></div>
+      <div class="admin-card">
+        <h2 class="admin-card-title">Achievements & Milestones</h2>
+        <div id="achievementsContainer"></div>
+      </div>
     </div>
+
+    <!-- TAB 6: Site Settings -->
     <div class="admin-tab-section" id="settingsSection" style="display: none;">
       <div class="admin-card">
-        <label class="form-label">Custom Logo URL</label>
-        <input type="text" id="settingLogoUrl" class="form-control">
-        <label class="form-label" style="margin-top:1rem; display:block;">Custom Background URL</label>
-        <input type="text" id="settingBackgroundUrl" class="form-control">
+        <h2 class="admin-card-title">Branding & Background Settings</h2>
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label">Custom Logo URL</label>
+          <input type="text" id="settingLogoUrl" class="form-control">
+        </div>
+        <div>
+          <label class="form-label">Custom Background Image URL</label>
+          <input type="text" id="settingBackgroundUrl" class="form-control">
+        </div>
       </div>
     </div>
 
   </main>
 
-  <!-- SCRIPT LOGIK LANGSUNG DI FILE INI (BEBAS LAG & CACHE ERROR) -->
+  <!-- Skrip Navigasi & Auth Terintegrasi -->
   <script>
     function checkDirectAuth() {
       const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
@@ -214,13 +246,27 @@
         sessionStorage.setItem('admin_logged_in', 'true');
         checkDirectAuth();
       } else {
-        document.getElementById('authError').textContent = 'Username atau password salah! Gunakan admin / admin123';
+        document.getElementById('authError').textContent = 'Username atau password salah! (admin / admin123)';
       }
     }
 
     function directLogout() {
       sessionStorage.removeItem('admin_logged_in');
       checkDirectAuth();
+    }
+
+    // Fungsi Perpindahan Tab Sidebar
+    function switchTab(tabName, element) {
+      const allSections = document.querySelectorAll('.admin-tab-section');
+      allSections.forEach(sec => sec.style.display = 'none');
+
+      const allBtns = document.querySelectorAll('.admin-nav-list .admin-tab-btn');
+      allBtns.forEach(btn => btn.classList.remove('active'));
+
+      const targetSec = document.getElementById(tabName + 'Section');
+      if (targetSec) targetSec.style.display = 'block';
+
+      if (element) element.classList.add('active');
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -347,15 +347,16 @@
       if (element) element.classList.add('active');
     }
 
-    // Pemicu Fetch Data yang Aman
+   // Pemicu Fetch Data Otomatis
     async function loadContentData() {
       if (typeof initAdminData === 'function') {
         await initAdminData();
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       checkDirectAuth();
+      await loadContentData(); // <-- INI YANG BIKIN DATA DARI JSON KETARIK!
     });
   </script>
 </body>

@@ -15,13 +15,38 @@
 
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/admin.css">
+
+  <style>
+    /* Fix Warna Input Form & Textarea di Admin Dashboard */
+    .admin-card input.form-control,
+    .admin-card textarea.form-control,
+    .item-editor-card input.form-control,
+    .item-editor-card textarea.form-control {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    .admin-card input.form-control:focus,
+    .admin-card textarea.form-control:focus,
+    .item-editor-card input.form-control:focus,
+    .item-editor-card textarea.form-control:focus {
+      background-color: #ffffff !important;
+      border-color: #0284c7 !important;
+      color: #0f172a !important;
+      outline: none !important;
+    }
+    .admin-card label.form-label,
+    .admin-card label,
+    .item-editor-card label {
+      color: #1e293b !important;
+      font-weight: 600 !important;
+    }
+  </style>
 </head>
 
 <body class="admin-body">
 
-  <!-- ==========================================================================
-       Authentication Gate (Lock Screen Modal)
-       ========================================================================== -->
+  <!-- Authentication Gate (Lock Screen Modal) -->
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
       <div class="auth-lock-icon">
@@ -33,7 +58,7 @@
       <h2 class="auth-title">Admin Management Portal</h2>
       <p class="auth-desc">Please log in to manage your portfolio, case studies, and career data.</p>
 
-    <form id="authForm" onsubmit="handleLogin(event)">
+      <form id="authForm" onsubmit="handleLogin(event)">
         <div style="text-align: left; margin-bottom: 1.25rem;">
           <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Username</label>
           <input type="text" id="adminUser" class="form-control" placeholder="admin" required autofocus>
@@ -41,7 +66,7 @@
 
         <div style="text-align: left; margin-bottom: 1.5rem;">
           <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem;">Password</label>
-          <input type="password" id="adminPass" class="form-control" placeholder="admin123" required>
+          <input type="password" id="adminPass" class="form-control" placeholder="••••••••" required>
           <div id="authError" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.4rem;"></div>
         </div>
 
@@ -52,9 +77,7 @@
     </div>
   </div>
 
-  <!-- ==========================================================================
-       Admin Sidebar
-       ========================================================================== -->
+  <!-- Admin Sidebar -->
   <aside class="admin-sidebar">
     <div class="admin-brand">
       <div class="logo-monogram" style="width: 32px; height: 32px; font-size: 0.85rem;">JS</div>
@@ -126,9 +149,7 @@
     </div>
   </aside>
 
-  <!-- ==========================================================================
-       Admin Main Working Area
-       ========================================================================== -->
+  <!-- Admin Main Working Area -->
   <main class="admin-content">
 
     <!-- Top Action Bar -->
@@ -136,8 +157,7 @@
       <div>
         <h1 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;">
           Content Management</h1>
-        <p style="color: var(--admin-text-muted); font-size: 0.92rem;">Directly edit content across all pages of your
-          portfolio.</p>
+        <p style="color: var(--admin-text-muted); font-size: 0.92rem;">Directly edit content across all pages of your portfolio.</p>
       </div>
 
       <div class="admin-actions-bar">
@@ -266,7 +286,7 @@
     <div class="admin-tab-section" id="settingsSection" style="display: none;">
       <div class="admin-card">
         <h2 class="admin-card-title">Branding & Visuals</h2>
-        
+
         <div style="margin-bottom: 1.25rem;">
           <label class="form-label">Custom Logo URL (SVG, PNG, JPG)</label>
           <input type="text" id="settingLogoUrl" class="form-control" placeholder="assets/img/monogram_logo.svg">
@@ -283,34 +303,6 @@
 
   </main>
 
-  <script>
-    function checkAuth() {
-      const isAuth = sessionStorage.getItem('admin_logged_in') === 'true';
-      const overlay = document.getElementById('authOverlay');
-      if (overlay) {
-        overlay.style.display = isAuth ? 'none' : 'flex';
-      }
-    }
-
-    function handleLogin(e) {
-      e.preventDefault();
-      const user = document.getElementById('adminUser').value;
-      const pass = document.getElementById('adminPass').value;
-
-      if (user === 'admin' && pass === 'admin123') {
-        sessionStorage.setItem('admin_logged_in', 'true');
-        checkAuth();
-        alert('Login berhasil! Selamat datang Jaenudin.');
-      } else {
-        document.getElementById('authError').textContent = 'Username atau Password salah! (Hint: admin / admin123)';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
-      document.getElementById('authForm')?.addEventListener('submit', handleLogin);
-    });
-  </script>
   <script src="../js/admin.js"></script>
 </body>
 
